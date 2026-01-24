@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, Loader, AlertCircle, CheckCircle } from "lucide-react";
+import { validateEmail, validatePassword } from '../../utils/helper';
 
 const Login = () => {
 
@@ -17,36 +18,7 @@ const Login = () => {
     success: false,
   })
 
-  // form validation functions
-
-  const validateEmail = (email) => {
-    if (!email) return false
-
-    const regex =
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
-    // return regex.test(email.trim())
-    if(!regex.test(email.trim())) return "Please enter a valid email address."
-    return ""
-  }
-
-
-  const validatePassword = (password) => {
-    if (!password) return false
-
-    // Minimum 8 characters
-    // At least 1 uppercase
-    // At least 1 lowercase
-    // At least 1 number
-    // At least 1 special character
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-
-    // return regex.test(password)
-    if(!regex.test(password)) return "Minimum 8 characters with at least 1 uppercase, lowercase, number and special character."
-  }
-
-
+  
   // Handle input
 
   const handleInputChange = (e) => {
@@ -96,6 +68,26 @@ const Login = () => {
         }
       }))
     }
+  }
+
+  if(formState.success) {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4'>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className='bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center'
+        >
+          <CheckCircle className='w-16 h-16 text-green-500 mx-auto mb-4'/>
+          <h2 className='text-2xl font-bold text-gray-900 mb-2'>Welcome Back</h2>
+          <p className='text-gray-600 mb-4'>
+            You have been successfully logged in.
+          </p>
+          <div className='animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto'/>
+          <p className='text-sm text-gray-500 mt-2'>Redirecting to your dashboard...</p>
+        </motion.div>
+      </div>
+    )
   }
 
   return (
