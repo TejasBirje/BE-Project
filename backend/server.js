@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "path";
 import connectDB from "./config/db.js"
 import authRoutes from "./routes/auth.route.js"
+import userRoutes from "./routes/user.route.js"
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes)
 
 // Server uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
