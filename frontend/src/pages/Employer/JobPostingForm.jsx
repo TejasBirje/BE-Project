@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send } from "lucide-react";
@@ -141,7 +141,43 @@ const JobPostingForm = () => {
     return Object.keys(validateErrors).length === 0;
   }
 
-  if(isPreview) {
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      if (!jobId) return;
+
+      try {
+        const response = await axiosInstance.get(
+          API_PATHS.JOBS.GET_JOB_BY_ID(jobId)
+        );
+
+        const jobData = response.data;
+
+        if (jobData) {
+          setFormData((prev) => ({
+            ...prev,
+            jobTitle: jobData.title || "",
+            location: jobData.location || "",
+            category: jobData.category || "",
+            jobType: jobData.jobType || "",
+            description: jobData.description || "",
+            requirements: jobData.requirements || "",
+            salaryMin: jobData.salaryMin || 0,
+            salaryMax: jobData.salaryMax || 0,
+          }));
+        }
+      } catch (error) {
+        console.log("Error fetching job details");
+        if (error.response) {
+          console.log("API Error:", error.response.data.message);
+        }
+      }
+    };
+
+    fetchJobDetails();
+  }, [jobId]);
+
+
+  if (isPreview) {
     return (
       <DashboardLayout activeMenu={"post-job"}>
         <JobPostingPreview formData={formData} setIsPreview={setIsPreview} />
