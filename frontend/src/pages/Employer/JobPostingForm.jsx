@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import InputField from "../../components/input/InputField"
 import SelectField from "../../components/input/SelectField"
 import TextareaField from "../../components/input/TextareaField"
+import JobPostingPreview from '../../components/cards/JobPostingPreview.jsx';
 
 const JobPostingForm = () => {
 
