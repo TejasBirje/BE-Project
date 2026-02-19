@@ -41,3 +41,18 @@ export const validateAvatar = (file) => {
 
     return "";
 }
+
+export const getInitials = (name) => {
+
+    console.log(name)
+
+    if (!name || typeof name !== "string") return "";
+    return name
+      .trim()
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word.charAt(0))
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };

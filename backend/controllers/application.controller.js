@@ -38,22 +38,42 @@ export const getMyApplications = async (req, res) => {
     }
 }
 
-// GET all applicants for a job (employer)
+// // GET all applicants for a job (employer)
+// export const getApplicantsForJob = async (req, res) => {
+//     try {
+//         const job = await Job.findById(req.params.jobId);
+
+//         if(!job || job.company.toString() !== req.user._id.toString()) {
+//             return res.status(403).json({ message: "Not authorized to view applicants"})
+//         }
+
+//         const apps = await Application.find({ job: req.params.jobId }).populate("job", "title location category type")
+
+//         res.json(apps);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// }
+
 export const getApplicantsForJob = async (req, res) => {
     try {
         const job = await Job.findById(req.params.jobId);
 
-        if(!job || job.company.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: "Not authorized to view applicants"})
+        if (!job || job.company.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized to view applicants" });
         }
 
-        const apps = await Application.find({ job: req.params.jobId }).populate("job", "title location category type")
+        const apps = await Application.find({ job: req.params.jobId })
+            .populate("job", "title location category type")
+            .populate("applicant", "name email avatar resume")
+            .sort({ createdAt: -1 });
 
         res.json(apps);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 // GET application by ID (jobseeker or employer)
 export const getApplicationById = async (req, res) => {
