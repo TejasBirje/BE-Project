@@ -1,40 +1,50 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     role: {
-        type: String,
-        enum: ["jobseeker", "employer"],
-        required: true,
+      type: String,
+      enum: ["jobseeker", "employer"],
+      required: true,
     },
     avatar: {
-        type: String,
+      type: String,
     },
+    // URL string kept for quick display / download
     resume: {
-        type: String,
+      type: String,
+    },
+    // ObjectId reference to the Resume document (for ATS, interview etc.)
+    resumeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Resume",
+      default: null,
     },
     companyName: {
-        type: String,
+      type: String,
     },
     companyDescription: {
-        type: String,
+      type: String,
     },
     companyLogo: {
-        type: String,
-    }
-}, { timestamps: true });
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
 // Encrypt password before saving
 // userSchema.pre("save", async function (next) {

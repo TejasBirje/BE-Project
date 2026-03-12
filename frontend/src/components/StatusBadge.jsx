@@ -1,20 +1,25 @@
-import React from 'react'
+import React from "react";
 
 const StatusBadge = ({ status }) => {
-    const statusConfig = {
-        Applied: "bg-gray-100 text-gray-800",
-        Interview: "bg-yellow-100 text-yellow-800",
-        Hired: "bg-green-100 text-green-800",
-        Rejected: "bg-red-100 text-red-800"
-    }
+  const statusConfig = {
+    Applied: "bg-gray-100 text-gray-800",
+    "Under Review": "bg-yellow-100 text-yellow-800",
+    Accepted: "bg-green-100 text-green-800",
+    Rejected: "bg-red-100 text-red-800",
+    // Legacy / aliases
+    Interview: "bg-yellow-100 text-yellow-800",
+    Hired: "bg-green-100 text-green-800",
+  };
 
   return (
     <span
-        className={`px-3 py-1 rounded text-sm font-medium ${statusConfig[status] || "bg-gray-100 text-gray-800"}`}
+      className={`px-3 py-1 rounded text-sm font-medium ${
+        statusConfig[status] || "bg-gray-100 text-gray-800"
+      }`}
     >
-        {status}
+      {status}
     </span>
-  )
-}
+  );
+};
 
-export default StatusBadge
+export default StatusBadge;

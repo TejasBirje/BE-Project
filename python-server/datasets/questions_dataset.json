@@ -1,0 +1,702 @@
+[
+  {
+    "id": "q1",
+    "topic": "React",
+    "difficulty": "Easy",
+    "question": "What is the Virtual DOM in React, and how does it improve performance compared to directly manipulating the real DOM?",
+    "ideal_keywords": ["virtual dom", "diffing", "reconciliation", "performance", "batch updates"]
+  },
+  {
+    "id": "q2",
+    "topic": "React",
+    "difficulty": "Intermediate",
+    "question": "Can you explain the difference between useMemo and useCallback, and when you would choose to use one over the other?",
+    "ideal_keywords": ["memoization", "re-rendering", "functions", "values", "performance"]
+  },
+  {
+    "id": "q3",
+    "topic": "React",
+    "difficulty": "Advanced",
+    "question": "How would you architect a large-scale React application with code splitting, lazy loading, and state management to handle millions of users?",
+    "ideal_keywords": ["code splitting", "lazy loading", "redux", "context api", "suspense", "scalability"]
+  },
+  {
+    "id": "q4",
+    "topic": "Node.js",
+    "difficulty": "Easy",
+    "question": "Explain the event loop in Node.js. Why is Node.js considered non-blocking and single-threaded?",
+    "ideal_keywords": ["event loop", "non-blocking", "single-threaded", "callbacks", "asynchronous"]
+  },
+  {
+    "id": "q5",
+    "topic": "Node.js",
+    "difficulty": "Intermediate",
+    "question": "What is the difference between process.nextTick(), setImmediate(), and setTimeout() in Node.js? When would you use each?",
+    "ideal_keywords": ["event loop phases", "microtask", "macrotask", "tick", "I/O polling"]
+  },
+  {
+    "id": "q6",
+    "topic": "Node.js",
+    "difficulty": "Advanced",
+    "question": "How would you handle memory leaks in a Node.js production application? What tools and strategies would you use to detect and fix them?",
+    "ideal_keywords": ["heap snapshot", "memory profiling", "garbage collection", "v8", "clinic.js", "leaks"]
+  },
+  {
+    "id": "q7",
+    "topic": "JavaScript",
+    "difficulty": "Easy",
+    "question": "What are closures in JavaScript? Can you give a practical example of when you would use one?",
+    "ideal_keywords": ["lexical scope", "outer function", "data privacy", "encapsulation", "returned function"]
+  },
+  {
+    "id": "q8",
+    "topic": "JavaScript",
+    "difficulty": "Intermediate",
+    "question": "Explain the difference between Promises, async/await, and callbacks. How does the JavaScript engine handle asynchronous operations?",
+    "ideal_keywords": ["promise chain", "async await", "callback hell", "microtask queue", "event loop"]
+  },
+  {
+    "id": "q9",
+    "topic": "JavaScript",
+    "difficulty": "Advanced",
+    "question": "How does prototypal inheritance work in JavaScript? How does it differ from classical inheritance in languages like Java?",
+    "ideal_keywords": ["prototype chain", "__proto__", "Object.create", "constructor", "delegation"]
+  },
+  {
+    "id": "q10",
+    "topic": "TypeScript",
+    "difficulty": "Easy",
+    "question": "What problems does TypeScript solve that plain JavaScript doesn't? What are the key benefits of using TypeScript in a project?",
+    "ideal_keywords": ["type safety", "compile time errors", "interfaces", "tooling", "autocompletion"]
+  },
+  {
+    "id": "q11",
+    "topic": "TypeScript",
+    "difficulty": "Intermediate",
+    "question": "Explain the difference between interfaces and type aliases in TypeScript. When would you prefer one over the other?",
+    "ideal_keywords": ["declaration merging", "extends", "union types", "intersection", "implements"]
+  },
+  {
+    "id": "q12",
+    "topic": "MongoDB",
+    "difficulty": "Easy",
+    "question": "What is the difference between SQL and NoSQL databases? When would you choose MongoDB over a relational database like PostgreSQL?",
+    "ideal_keywords": ["schema-less", "document-based", "horizontal scaling", "flexibility", "JSON-like"]
+  },
+  {
+    "id": "q13",
+    "topic": "MongoDB",
+    "difficulty": "Intermediate",
+    "question": "Explain how the aggregation pipeline works in MongoDB. What is the advantage of using it over multiple standard queries?",
+    "ideal_keywords": ["stages", "$match", "$group", "performance", "server-side"]
+  },
+  {
+    "id": "q14",
+    "topic": "MongoDB",
+    "difficulty": "Advanced",
+    "question": "How would you design a sharding strategy for a MongoDB cluster handling billions of documents? What are the trade-offs of different shard keys?",
+    "ideal_keywords": ["shard key", "horizontal partitioning", "chunk balancing", "mongos", "replica set"]
+  },
+  {
+    "id": "q15",
+    "topic": "SQL",
+    "difficulty": "Intermediate",
+    "question": "Explain the differences between INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL OUTER JOIN. Give a practical scenario for each.",
+    "ideal_keywords": ["join types", "matching rows", "null values", "cartesian product", "foreign key"]
+  },
+  {
+    "id": "q16",
+    "topic": "SQL",
+    "difficulty": "Advanced",
+    "question": "What are database indexes and how do they work internally? When can an index actually hurt performance?",
+    "ideal_keywords": ["B-tree", "query optimizer", "write overhead", "covering index", "composite index"]
+  },
+  {
+    "id": "q17",
+    "topic": "System Design",
+    "difficulty": "Intermediate",
+    "question": "How would you design a URL shortener service like bit.ly? Walk me through the architecture and database design.",
+    "ideal_keywords": ["hashing", "base62", "redirect", "analytics", "cache", "load balancer"]
+  },
+  {
+    "id": "q18",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "How would you design a rate limiter for a high-traffic API? Which algorithm and data store would you use?",
+    "ideal_keywords": ["redis", "token bucket", "sliding window", "latency", "distributed systems"]
+  },
+  {
+    "id": "q19",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "Design a real-time chat system like WhatsApp. How would you handle message delivery, read receipts, and offline users?",
+    "ideal_keywords": ["websockets", "message queue", "presence", "fanout", "eventual consistency"]
+  },
+  {
+    "id": "q20",
+    "topic": "REST API",
+    "difficulty": "Easy",
+    "question": "What are the key principles of RESTful API design? Explain the difference between PUT and PATCH methods.",
+    "ideal_keywords": ["stateless", "resource-based", "HTTP methods", "idempotent", "partial update"]
+  },
+  {
+    "id": "q21",
+    "topic": "REST API",
+    "difficulty": "Intermediate",
+    "question": "How would you implement authentication and authorization in a REST API? Compare JWT tokens vs session-based authentication.",
+    "ideal_keywords": ["JWT", "OAuth2", "session cookies", "stateless", "refresh token", "middleware"]
+  },
+  {
+    "id": "q22",
+    "topic": "Docker",
+    "difficulty": "Easy",
+    "question": "What is Docker and how does it differ from a virtual machine? What are the key benefits of containerization?",
+    "ideal_keywords": ["containers", "images", "lightweight", "isolation", "Dockerfile", "portability"]
+  },
+  {
+    "id": "q23",
+    "topic": "Docker",
+    "difficulty": "Intermediate",
+    "question": "How would you set up a multi-container application using Docker Compose? Explain networking between containers.",
+    "ideal_keywords": ["docker-compose", "services", "volumes", "bridge network", "environment variables"]
+  },
+  {
+    "id": "q24",
+    "topic": "Git",
+    "difficulty": "Easy",
+    "question": "Explain the difference between git merge and git rebase. When would you use each strategy in a team workflow?",
+    "ideal_keywords": ["merge commit", "linear history", "conflict resolution", "feature branch", "squash"]
+  },
+  {
+    "id": "q25",
+    "topic": "Python",
+    "difficulty": "Easy",
+    "question": "What are Python decorators and how do they work? Give an example of a common use case.",
+    "ideal_keywords": ["wrapper function", "higher-order function", "@syntax", "logging", "authentication"]
+  },
+  {
+    "id": "q26",
+    "topic": "Python",
+    "difficulty": "Intermediate",
+    "question": "Explain the Global Interpreter Lock (GIL) in Python. How does it affect multithreading, and what are the alternatives for CPU-bound tasks?",
+    "ideal_keywords": ["GIL", "threading", "multiprocessing", "CPU-bound", "I/O-bound", "concurrency"]
+  },
+  {
+    "id": "q27",
+    "topic": "DSA",
+    "difficulty": "Easy",
+    "question": "What is the difference between an Array and a Linked List? When would you choose one over the other?",
+    "ideal_keywords": ["contiguous memory", "dynamic size", "insertion", "random access", "pointers"]
+  },
+  {
+    "id": "q28",
+    "topic": "DSA",
+    "difficulty": "Intermediate",
+    "question": "Explain the time complexity of common sorting algorithms. When would you use QuickSort vs MergeSort?",
+    "ideal_keywords": ["O(n log n)", "divide and conquer", "stable sort", "in-place", "worst case", "pivot"]
+  },
+  {
+    "id": "q29",
+    "topic": "DSA",
+    "difficulty": "Advanced",
+    "question": "How would you design an LRU Cache with O(1) get and put operations? Which data structures would you combine?",
+    "ideal_keywords": ["hashmap", "doubly linked list", "eviction", "capacity", "O(1) operations"]
+  },
+  {
+    "id": "q30",
+    "topic": "CI/CD",
+    "difficulty": "Intermediate",
+    "question": "Describe a CI/CD pipeline you would set up for a full-stack application. What stages would you include and which tools would you use?",
+    "ideal_keywords": ["continuous integration", "deployment", "GitHub Actions", "testing", "staging", "rollback"]
+  },
+  {
+    "id": "q31",
+    "topic": "Express.js",
+    "difficulty": "Easy",
+    "question": "What is middleware in Express.js? Can you explain the order of execution for middleware functions?",
+    "ideal_keywords": ["req", "res", "next()", "request pipeline", "routing"]
+  },
+  {
+    "id": "q32",
+    "topic": "Express.js",
+    "difficulty": "Intermediate",
+    "question": "How do you handle central error processing in an Express application to prevent server crashes?",
+    "ideal_keywords": ["error-handling middleware", "four arguments", "err, req, res, next", "try-catch", "global handler"]
+  },
+  {
+    "id": "q33",
+    "topic": "Go",
+    "difficulty": "Easy",
+    "question": "Explain the difference between arrays and slices in Go. Why are slices used more frequently?",
+    "ideal_keywords": ["fixed size", "dynamic size", "reference type", "capacity", "append"]
+  },
+  {
+    "id": "q34",
+    "topic": "Go",
+    "difficulty": "Intermediate",
+    "question": "What are Goroutines and Channels? How do they facilitate concurrent programming in Go?",
+    "ideal_keywords": ["lightweight threads", "communication", "concurrency", "synchronization", "deadlock"]
+  },
+  {
+    "id": "q35",
+    "topic": "Go",
+    "difficulty": "Advanced",
+    "question": "How does the Go garbage collector work? What are the performance implications of allocating heavily on the heap vs the stack?",
+    "ideal_keywords": ["mark and sweep", "escape analysis", "pointers", "latency", "memory allocation"]
+  },
+  {
+    "id": "q36",
+    "topic": "WebSockets",
+    "difficulty": "Intermediate",
+    "question": "Explain the WebSocket handshake process. How does it upgrade an HTTP connection to a persistent socket?",
+    "ideal_keywords": ["Upgrade header", "TCP connection", "bidirectional", "101 Switching Protocols", "real-time"]
+  },
+  {
+    "id": "q37",
+    "topic": "WebSockets",
+    "difficulty": "Advanced",
+    "question": "How would you scale a real-time WebSocket chat application across multiple servers? How do you ensure users on Server A can message users on Server B?",
+    "ideal_keywords": ["Redis Pub/Sub", "message broker", "sticky sessions", "load balancing", "horizontal scaling"]
+  },
+  {
+    "id": "q38",
+    "topic": "Machine Learning",
+    "difficulty": "Easy",
+    "question": "Explain the difference between supervised and unsupervised learning. Provide a common use case for each.",
+    "ideal_keywords": ["labeled data", "unlabeled data", "classification", "regression", "clustering"]
+  },
+  {
+    "id": "q39",
+    "topic": "Machine Learning",
+    "difficulty": "Intermediate",
+    "question": "What is the Bias-Variance tradeoff? How do overfitting and underfitting relate to this concept?",
+    "ideal_keywords": ["overfitting", "underfitting", "training data", "unseen data", "generalization", "complexity"]
+  },
+  {
+    "id": "q40",
+    "topic": "Machine Learning",
+    "difficulty": "Advanced",
+    "question": "How does gradient descent work in optimizing a model's performance? What is the role of the learning rate?",
+    "ideal_keywords": ["loss function", "local minimum", "step size", "convergence", "weights"]
+  },
+  {
+    "id": "q41",
+    "topic": "LangChain",
+    "difficulty": "Intermediate",
+    "question": "What is Retrieval-Augmented Generation (RAG)? How do you use LangChain to implement a RAG pipeline?",
+    "ideal_keywords": ["vector database", "embeddings", "context injection", "document loader", "prompt template"]
+  },
+  {
+    "id": "q42",
+    "topic": "LangChain",
+    "difficulty": "Advanced",
+    "question": "Explain the concept of 'Agents' in LangChain. How does an agent decide which tool to call during execution?",
+    "ideal_keywords": ["LLM reasoning", "tool calling", "ReAct framework", "observation", "action sequence"]
+  },
+  {
+    "id": "q43",
+    "topic": "Flask",
+    "difficulty": "Easy",
+    "question": "What is a Flask Blueprint? Why is it useful for building larger web applications?",
+    "ideal_keywords": ["modularity", "routing", "application structure", "separation of concerns", "components"]
+  },
+  {
+    "id": "q44",
+    "topic": "Flask",
+    "difficulty": "Intermediate",
+    "question": "Explain the concept of Application Context and Request Context in Flask. How are globals like 'request' and 'g' managed securely?",
+    "ideal_keywords": ["thread-local", "proxy objects", "concurrency", "request lifecycle", "context locals"]
+  },
+  {
+    "id": "q45",
+    "topic": "C++",
+    "difficulty": "Easy",
+    "question": "What is the difference between a pointer and a reference in C++? When is it better to use one over the other?",
+    "ideal_keywords": ["memory address", "alias", "null reassignment", "syntax", "safety"]
+  },
+  {
+    "id": "q46",
+    "topic": "C++",
+    "difficulty": "Intermediate",
+    "question": "Explain the concept of RAII (Resource Acquisition Is Initialization) in C++. How do smart pointers utilize this pattern?",
+    "ideal_keywords": ["destructor", "memory leak", "unique_ptr", "shared_ptr", "scope management"]
+  },
+  {
+    "id": "q47",
+    "topic": "C++",
+    "difficulty": "Advanced",
+    "question": "How does dynamic polymorphism work under the hood in C++? Explain the role of the vtable and vptr.",
+    "ideal_keywords": ["virtual functions", "dynamic dispatch", "late binding", "pointers to functions", "inheritance"]
+  },
+  {
+    "id": "q48",
+    "topic": "DSA",
+    "difficulty": "Intermediate",
+    "question": "What is the difference between Breadth-First Search (BFS) and Depth-First Search (DFS)? Mention a scenario where BFS is strictly better.",
+    "ideal_keywords": ["queue", "stack", "shortest path", "level-order", "recursion"]
+  },
+  {
+    "id": "q49",
+    "topic": "DSA",
+    "difficulty": "Intermediate",
+    "question": "Explain Dynamic Programming. What are the differences between Memoization and Tabulation?",
+    "ideal_keywords": ["overlapping subproblems", "optimal substructure", "top-down", "bottom-up", "cache"]
+  },
+  {
+    "id": "q50",
+    "topic": "DSA",
+    "difficulty": "Advanced",
+    "question": "How does a Trie (Prefix Tree) work? What is its time complexity for insertion and search, and when would you use it over a Hash Map?",
+    "ideal_keywords": ["autocomplete", "string matching", "O(L) time", "nodes", "memory overhead"]
+  },
+  {
+    "id": "q51",
+    "topic": "DSA",
+    "difficulty": "Advanced",
+    "question": "Explain Dijkstra's algorithm. How does it find the shortest path, and what data structure is best used to optimize it?",
+    "ideal_keywords": ["weighted graph", "priority queue", "min-heap", "greedy", "relaxation"]
+  },
+  {
+    "id": "q52",
+    "topic": "Kubernetes",
+    "difficulty": "Easy",
+    "question": "What is the difference between a Pod and a Node in Kubernetes?",
+    "ideal_keywords": ["smallest unit", "containers", "worker machine", "scheduling", "cluster"]
+  },
+  {
+    "id": "q53",
+    "topic": "Kubernetes",
+    "difficulty": "Intermediate",
+    "question": "Explain the different types of Kubernetes Services (ClusterIP, NodePort, LoadBalancer). When do you use each?",
+    "ideal_keywords": ["internal routing", "external access", "cloud provider", "networking", "exposure"]
+  },
+  {
+    "id": "q54",
+    "topic": "Kubernetes",
+    "difficulty": "Advanced",
+    "question": "How do you manage application configuration and sensitive data in Kubernetes without hardcoding them in your Docker images?",
+    "ideal_keywords": ["ConfigMaps", "Secrets", "environment variables", "volume mounts", "base64 encoding"]
+  },
+  {
+    "id": "q55",
+    "topic": "SQL",
+    "difficulty": "Easy",
+    "question": "What do the ACID properties stand for in a relational database system? Why are they important?",
+    "ideal_keywords": ["Atomicity", "Consistency", "Isolation", "Durability", "transactions"]
+  },
+  {
+    "id": "q56",
+    "topic": "SQL",
+    "difficulty": "Intermediate",
+    "question": "What is Database Normalization? Briefly explain the transition from 1NF to 3NF.",
+    "ideal_keywords": ["redundancy", "data integrity", "primary key", "foreign key", "transitive dependency"]
+  },
+  {
+    "id": "q57",
+    "topic": "SQL",
+    "difficulty": "Advanced",
+    "question": "What is the N+1 query problem in ORMs (like Mongoose or Prisma)? How do you optimize and solve it?",
+    "ideal_keywords": ["lazy loading", "eager loading", "joins", "batching", "dataloader"]
+  },
+  {
+    "id": "q58",
+    "topic": "React",
+    "difficulty": "Intermediate",
+    "question": "What is a 'memory leak' in a React component, and how can the useEffect hook be used to prevent it?",
+    "ideal_keywords": ["cleanup function", "unmounting", "event listeners", "setInterval", "abort controller"]
+  },
+  {
+    "id": "q59",
+    "topic": "React",
+    "difficulty": "Advanced",
+    "question": "Explain the concept of React Server Components (RSC). How do they differ from Server-Side Rendering (SSR)?",
+    "ideal_keywords": ["zero bundle size", "hydration", "client boundaries", "data fetching", "next.js"]
+  },
+  {
+    "id": "q60",
+    "topic": "Node.js",
+    "difficulty": "Intermediate",
+    "question": "What are Streams in Node.js? Name the four types of streams and explain why they are preferred for handling large files.",
+    "ideal_keywords": ["chunks", "buffer", "readable", "writable", "duplex", "transform", "memory efficiency"]
+  },
+  {
+    "id": "q61",
+    "topic": "Node.js",
+    "difficulty": "Advanced",
+    "question": "Since Node.js is single-threaded, how can you scale a Node application to utilize multiple CPU cores?",
+    "ideal_keywords": ["Cluster module", "Worker threads", "PM2", "child processes", "load balancing"]
+  },
+  {
+    "id": "q62",
+    "topic": "System Design",
+    "difficulty": "Intermediate",
+    "question": "What is the CAP theorem? Why is it impossible for a distributed data store to guarantee all three simultaneously?",
+    "ideal_keywords": ["Consistency", "Availability", "Partition Tolerance", "network failure", "trade-offs"]
+  },
+  {
+    "id": "q63",
+    "topic": "System Design",
+    "difficulty": "Intermediate",
+    "question": "Explain the difference between a Monolithic architecture and Microservices. What are the main drawbacks of moving to Microservices?",
+    "ideal_keywords": ["decoupled", "independent deployment", "network latency", "complexity", "single point of failure"]
+  },
+  {
+    "id": "q64",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "How does Consistent Hashing work, and what specific problem does it solve in distributed caching or load balancing?",
+    "ideal_keywords": ["hash ring", "node additions", "data redistribution", "virtual nodes", "horizontal scaling"]
+  },
+  {
+    "id": "q65",
+    "topic": "Git",
+    "difficulty": "Intermediate",
+    "question": "What is the difference between git reset and git revert? In what scenario is using git reset dangerous?",
+    "ideal_keywords": ["commit history", "destructive", "new commit", "shared repository", "working directory"]
+  },
+  {
+    "id": "q66",
+    "topic": "CI/CD",
+    "difficulty": "Advanced",
+    "question": "Explain the difference between Blue/Green deployment and Canary deployment. What risks does each strategy mitigate?",
+    "ideal_keywords": ["zero downtime", "traffic routing", "gradual rollout", "instant rollback", "production environment"]
+  },
+  {
+    "id": "q67",
+    "topic": "Data Structures",
+    "difficulty": "Easy",
+    "question": "What is a Hash Collision in a Hash Map? How are collisions typically resolved?",
+    "ideal_keywords": ["hash function", "chaining", "linked list", "open addressing", "linear probing"]
+  },
+  {
+    "id": "q68",
+    "topic": "Data Structures",
+    "difficulty": "Intermediate",
+    "question": "What is a Binary Search Tree (BST)? What is the worst-case time complexity for searching an element in a BST and why?",
+    "ideal_keywords": ["left child", "right child", "O(N)", "unbalanced", "skewed tree"]
+  },
+  {
+    "id": "q69",
+    "topic": "Go",
+    "difficulty": "Intermediate",
+    "question": "What is the 'defer' keyword in Go? Explain a common use case where it is considered best practice.",
+    "ideal_keywords": ["LIFO execution", "cleanup", "closing files", "releasing locks", "return scope"]
+  },
+  {
+    "id": "q70",
+    "topic": "WebSockets",
+    "difficulty": "Intermediate",
+    "question": "How do you handle dropped connections or 'zombie' sockets in a WebSocket server?",
+    "ideal_keywords": ["heartbeat", "ping", "pong", "timeouts", "reconnection logic"]
+  },
+  {
+    "id": "q71",
+    "topic": "Machine Learning",
+    "difficulty": "Intermediate",
+    "question": "Explain what a Confusion Matrix is. Define Precision and Recall in this context.",
+    "ideal_keywords": ["true positives", "false positives", "false negatives", "accuracy", "F1 score"]
+  },
+  {
+    "id": "q72",
+    "topic": "LangChain",
+    "difficulty": "Intermediate",
+    "question": "What is a 'Chain' in LangChain? How does it differ from a standard API call to an LLM?",
+    "ideal_keywords": ["sequence of calls", "memory integration", "prompt formatting", "pipelining", "multi-step reasoning"]
+  },
+  {
+    "id": "q73",
+    "topic": "TypeScript",
+    "difficulty": "Advanced",
+    "question": "What are TypeScript Generics? How do they help in writing reusable utility functions or components?",
+    "ideal_keywords": ["type parameters", "<T>", "type inference", "flexibility", "type safety"]
+  },
+  {
+    "id": "q74",
+    "topic": "REST API",
+    "difficulty": "Intermediate",
+    "question": "What is idempotency in REST APIs? Which HTTP methods are strictly idempotent and why?",
+    "ideal_keywords": ["multiple identical requests", "same state", "GET", "PUT", "DELETE"]
+  },
+  {
+    "id": "q75",
+    "topic": "MongoDB",
+    "difficulty": "Advanced",
+    "question": "What are the trade-offs between embedding documents versus referencing documents in MongoDB?",
+    "ideal_keywords": ["16MB limit", "read performance", "data consistency", "normalization", "frequent updates"]
+  },
+  {
+    "id": "q76",
+    "topic": "System Design",
+    "difficulty": "Intermediate",
+    "question": "What is a Message Queue (like RabbitMQ or Kafka) and what problems does it solve in a microservice architecture?",
+    "ideal_keywords": ["asynchronous processing", "decoupling", "load leveling", "pub-sub", "fault tolerance"]
+  },
+  {
+    "id": "q77",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "In database replication, explain the difference between synchronous and asynchronous replication.",
+    "ideal_keywords": ["latency", "data loss", "durability", "master-slave", "commit wait"]
+  },
+  {
+    "id": "q78",
+    "topic": "Algorithms",
+    "difficulty": "Intermediate",
+    "question": "Explain the 'Sliding Window' technique. What specific types of array/string problems does it optimize?",
+    "ideal_keywords": ["contiguous subarrays", "O(N) time", "two pointers", "longest substring", "running sum"]
+  },
+  {
+    "id": "q79",
+    "topic": "Algorithms",
+    "difficulty": "Advanced",
+    "question": "What is Topological Sort? In what kind of graph structure can it be applied, and what is a real-world use case?",
+    "ideal_keywords": ["Directed Acyclic Graph", "DAG", "dependency resolution", "build systems", "in-degree"]
+  },
+  {
+    "id": "q80",
+    "topic": "Node.js",
+    "difficulty": "Easy",
+    "question": "Explain the purpose of the package-lock.json file. Why is it important to commit this file to version control?",
+    "ideal_keywords": ["deterministic installs", "exact versions", "dependency tree", "node_modules", "consistency"]
+  },
+  {
+    "id": "q81",
+    "topic": "React",
+    "difficulty": "Intermediate",
+    "question": "What are React Portals? Give an example of a UI component where using a portal is highly recommended.",
+    "ideal_keywords": ["DOM hierarchy", "createPortal", "modals", "z-index", "overflow hidden"]
+  },
+  {
+    "id": "q82",
+    "topic": "Docker",
+    "difficulty": "Advanced",
+    "question": "How do you optimize a Dockerfile to reduce the final image size and improve build cache times?",
+    "ideal_keywords": ["multi-stage builds", "alpine images", "layer caching", ".dockerignore", "ordering commands"]
+  },
+  {
+    "id": "q83",
+    "topic": "Go",
+    "difficulty": "Advanced",
+    "question": "Explain how the 'context' package is used in Go. Why is it critical for writing robust backend servers?",
+    "ideal_keywords": ["cancellation signals", "timeouts", "deadlines", "goroutine leaks", "request scope"]
+  },
+  {
+    "id": "q84",
+    "topic": "Flask",
+    "difficulty": "Easy",
+    "question": "How does Flask handle routing? Explain how you would capture dynamic variables from a URL path.",
+    "ideal_keywords": ["@app.route", "decorators", "variable rules", "<type:variable_name>", "view functions"]
+  },
+  {
+    "id": "q85",
+    "topic": "Machine Learning",
+    "difficulty": "Advanced",
+    "question": "What is the vanishing gradient problem in deep neural networks? How do activation functions like ReLU help solve it?",
+    "ideal_keywords": ["backpropagation", "sigmoid", "derivatives", "chain rule", "weight updates"]
+  },
+  {
+    "id": "q86",
+    "topic": "JavaScript",
+    "difficulty": "Intermediate",
+    "question": "What is the 'this' keyword in JavaScript? How does its behavior change when used inside an arrow function versus a regular function?",
+    "ideal_keywords": ["execution context", "lexical binding", "call/apply/bind", "global object", "object methods"]
+  },
+  {
+    "id": "q87",
+    "topic": "JavaScript",
+    "difficulty": "Advanced",
+    "question": "Explain the concept of JavaScript Event Delegation. Why is it more memory efficient than attaching listeners to individual child elements?",
+    "ideal_keywords": ["event bubbling", "target element", "single listener", "parent container", "dynamic elements"]
+  },
+  {
+    "id": "q88",
+    "topic": "C++",
+    "difficulty": "Intermediate",
+    "question": "What are C++ templates? How do they differ from macros in terms of type safety and compilation?",
+    "ideal_keywords": ["generic programming", "compiler instantiation", "type checking", "metaprogramming", "code bloat"]
+  },
+  {
+    "id": "q89",
+    "topic": "Kubernetes",
+    "difficulty": "Advanced",
+    "question": "What is an Ingress controller in Kubernetes? How does it differ from a standard LoadBalancer service?",
+    "ideal_keywords": ["HTTP/HTTPS routing", "path-based routing", "SSL termination", "single IP", "rules"]
+  },
+  {
+    "id": "q90",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "What are the common strategies to handle Database Replication Lag in a system with heavy read and write traffic?",
+    "ideal_keywords": ["read-after-write consistency", "cache invalidation", "synchronous commit", "routing rules", "eventual consistency"]
+  },
+  {
+    "id": "q91",
+    "topic": "LangChain",
+    "difficulty": "Advanced",
+    "question": "How do you handle 'Prompt Injection' attacks when exposing an LLM chain or agent to public user input?",
+    "ideal_keywords": ["system prompt isolation", "input sanitization", "guardrails", "delimiter formatting", "validation tools"]
+  },
+  {
+    "id": "q92",
+    "topic": "Data Structures",
+    "difficulty": "Intermediate",
+    "question": "What is a Priority Queue? Explain how it is typically implemented under the hood.",
+    "ideal_keywords": ["Min Heap", "Max Heap", "O(log N) insertion", "complete binary tree", "array representation"]
+  },
+  {
+    "id": "q93",
+    "topic": "Algorithms",
+    "difficulty": "Easy",
+    "question": "Explain the Two-Pointer technique. Give an example of a common array problem where this approach is used.",
+    "ideal_keywords": ["sorted arrays", "O(N) time", "O(1) space", "palindromes", "target sum"]
+  },
+  {
+    "id": "q94",
+    "topic": "SQL",
+    "difficulty": "Intermediate",
+    "question": "What is the difference between a Clustered and Non-Clustered index?",
+    "ideal_keywords": ["physical order", "logical order", "primary key", "leaf nodes", "pointers"]
+  },
+  {
+    "id": "q95",
+    "topic": "Go",
+    "difficulty": "Intermediate",
+    "question": "How do interfaces work in Go compared to Object-Oriented languages like Java? What does it mean that they are implemented implicitly?",
+    "ideal_keywords": ["method signatures", "no implements keyword", "duck typing", "polymorphism", "empty interface"]
+  },
+  {
+    "id": "q96",
+    "topic": "WebSockets",
+    "difficulty": "Easy",
+    "question": "What is Long Polling? How does it compare to WebSockets in terms of server resources and real-time capabilities?",
+    "ideal_keywords": ["HTTP connection kept open", "high overhead", "latency", "headers payload", "fallback"]
+  },
+  {
+    "id": "q97",
+    "topic": "React",
+    "difficulty": "Advanced",
+    "question": "Explain React's Concurrent Mode and the 'useTransition' hook. What UI/UX problems do they solve?",
+    "ideal_keywords": ["non-blocking renders", "urgent updates", "background rendering", "suspense", "responsiveness"]
+  },
+  {
+    "id": "q98",
+    "topic": "Machine Learning",
+    "difficulty": "Intermediate",
+    "question": "What is Cross-Validation? Why is it preferred over a simple train/test split for evaluating model performance?",
+    "ideal_keywords": ["K-fold", "variance reduction", "dataset distribution", "overfitting check", "robustness"]
+  },
+  {
+    "id": "q99",
+    "topic": "Flask",
+    "difficulty": "Advanced",
+    "question": "What is the difference between WSGI and ASGI? Why might you choose an ASGI framework (like FastAPI) over Flask for a heavily I/O bound application?",
+    "ideal_keywords": ["synchronous", "asynchronous", "event loop", "Web Server Gateway Interface", "concurrency"]
+  },
+  {
+    "id": "q100",
+    "topic": "System Design",
+    "difficulty": "Advanced",
+    "question": "Design an auto-scaling strategy for a stateful WebSocket server. How do you add nodes without disconnecting existing active users?",
+    "ideal_keywords": ["graceful shutdown", "connection draining", "pub-sub broker", "sticky sessions", "reconnect logic"]
+  }
+]
