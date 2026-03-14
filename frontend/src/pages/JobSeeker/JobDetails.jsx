@@ -5,7 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import Navbar from "../../components/layout/Navbar";
-import { Building2, Clock, DollarSign, MapPin, Users, Bot } from "lucide-react";
+import { Building2, Clock, IndianRupee, MapPin, Users, Bot } from "lucide-react";
 import moment from "moment";
 
 const JobDetails = () => {
@@ -157,7 +157,7 @@ const JobDetails = () => {
               <div className="relative overflow-hidden bg-linear-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-6 rounded-2xl">
                 <div className="flex items-center space-x-3">
                   <div className="p-3 bg-linear-to-r from-emerald-500 to-teal-500 rounded-xl">
-                    <DollarSign className="h-6 w-6 text-white" />
+                    <IndianRupee className="h-6 w-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">

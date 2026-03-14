@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send } from "lucide-react";
+import { AlertCircle, MapPin, IndianRupee , Briefcase, Users, Eye, Send } from "lucide-react";
 import { API_PATHS } from "../../utils/apiPaths.js"
 import axiosInstance from "../../utils/axiosInstance.js"
 import { CATEGORIES, JOB_TYPES } from "../../utils/data"
@@ -300,7 +300,7 @@ const JobPostingForm = () => {
                 <div className="grid grid-cols-3 gap-3">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <DollarSign className="h-5 w-5 text-gray-400" />
+                      <IndianRupee  className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
                       type="number"
@@ -313,7 +313,7 @@ const JobPostingForm = () => {
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <DollarSign className="h-5 w-5 text-gray-400" />
+                      <IndianRupee  className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
                       type="number"

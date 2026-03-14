@@ -6,6 +6,7 @@ import Job from "../models/job.model.js";
 import Application from "../models/application.model.js";
 import Resume from "../models/resume.model.js";
 import { extractPdfText } from "./user.controller.js";
+import nodemailer from "nodemailer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -82,6 +83,11 @@ async function saveAtsResult(applicationId, atsResult) {
 
 export const applyToJob = async (req, res) => {
   try {
+
+    const job = await Job.findById(req.params.jobId).select(
+      "description requirements company"
+    );
+
     if (req.user.role !== "jobseeker") {
       return res.status(403).json({ message: "Only job seekers can apply" });
     }
@@ -101,12 +107,11 @@ export const applyToJob = async (req, res) => {
     // Create the application first
     const application = await Application.create({
       job: req.params.jobId,
+      company: job.company || "Amazon Web Services",
       applicant: req.user._id,
       resume: resumeObjectId,
     }); // Compute ATS score asynchronously — don't block the response
-    const job = await Job.findById(req.params.jobId).select(
-      "description requirements"
-    );
+    
     if (job && resumeObjectId) {
       const jd = `${job.description}\n${job.requirements}`;
       computeAtsScore(resumeObjectId, jd)
@@ -229,16 +234,135 @@ export const updateStatus = async (req, res) => {
 // ── PUT /api/applications/:id/invite — Employer sends AI interview invite ──
 export const sendInterviewInvite = async (req, res) => {
   try {
-    const app = await Application.findById(req.params.id).populate("job");
+    const app = await Application.findById(req.params.id)
+      .populate("job")
+      .populate("applicant");
 
     if (!app) {
       return res.status(404).json({ message: "Application not found" });
     }
 
+    // Authorization check
     if (app.job.company.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
+    // Generate AI interview link
+    const interviewLink = `http://localhost:5173/interview/review/${app._id}`;
+
+    // Email transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send email
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: app.applicant.email,
+      subject: "AI Interview Invitation",
+      html: `
+<div style="background:#f3f4f6;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
+  <div style="
+      max-width:620px;
+      margin:auto;
+      background:white;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  ">
+    
+    <!-- Header -->
+    <div style="
+        background:linear-gradient(135deg,#6d28d9,#4f46e5);
+        padding:32px;
+        text-align:center;
+        color:white;
+    ">
+      <h1 style="margin:0;font-size:30px;">AI Interview Invitation</h1>
+      <p style="margin-top:8px;font-size:16px;opacity:0.9;">
+        You've been shortlisted for the next stage
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding:40px 34px;text-align:center;color:#374151;">
+      
+      <h2 style="font-size:24px;margin-bottom:10px;">
+        Hi ${app.applicant.name},
+      </h2>
+
+      <p style="font-size:17px;line-height:1.7;margin-bottom:18px;">
+        Congratulations! After reviewing your application, 
+        <b>${req.user.name}</b> has shortlisted you for the next stage 
+        of the hiring process for the position of 
+        <b style="color:#4f46e5;">${app.job.title}</b>.
+      </p>
+
+      <p style="font-size:16px;margin-bottom:30px;">
+        Please begin your <b>AI-powered interview</b> by clicking the button below.
+      </p>
+
+      <!-- Button -->
+      <a href="${interviewLink}" style="
+          display:inline-block;
+          padding:15px 36px;
+          background:#6d28d9;
+          color:white;
+          font-size:17px;
+          font-weight:bold;
+          text-decoration:none;
+          border-radius:8px;
+          box-shadow:0 4px 12px rgba(0,0,0,0.18);
+      ">
+        Start AI Interview
+      </a>
+
+      <p style="
+          margin-top:28px;
+          font-size:14px;
+          color:#6b7280;
+          line-height:1.6;
+      ">
+        The interview will take approximately <b>5–10 minutes</b>.  
+        Please complete it at your earliest convenience.
+      </p>
+
+      <!-- Backup link -->
+      <p style="margin-top:18px;font-size:13px;color:#9ca3af;">
+        If the button doesn't work, copy and paste this link into your browser:
+        <br>
+        <span style="color:#4f46e5;">${interviewLink}</span>
+      </p>
+
+    </div>
+
+    <!-- Footer -->
+    <div style="
+        background:#f9fafb;
+        padding:24px;
+        text-align:center;
+        font-size:14px;
+        color:#6b7280;
+    ">
+      <p style="margin:0;">
+        Best of luck with your interview!
+      </p>
+
+      <p style="margin-top:8px;font-size:15px;color:#374151;">
+        <b>${req.user.name}</b><br>
+      </p>
+    </div>
+
+  </div>
+</div>
+`
+    });
+
+    // Update DB
     app.interviewInvited = true;
     await app.save();
 
@@ -246,7 +370,9 @@ export const sendInterviewInvite = async (req, res) => {
       message: "AI Interview invitation sent",
       applicationId: app._id,
     });
+
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

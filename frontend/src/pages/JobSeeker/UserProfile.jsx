@@ -106,6 +106,7 @@ const UserProfile = () => {
         toast.success("Profile updated successfully");
         setProfileData(formData);
         updateUser({ name: formData.name, avatar: formData.avatar });
+        navigate("/find-jobs")
       }
     } catch (error) {
       console.error("Save Error:", error);
@@ -174,7 +175,7 @@ const UserProfile = () => {
                   )}
                 </div>
                 <label className="cursor-pointer">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-700 mr-3">
                     Change Photo
                   </span>
                   <input
@@ -224,7 +225,7 @@ const UserProfile = () => {
 
                 {formData.resume ? (
                   <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <FileText className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <FileText className="w-5 h-5 text-green-600 flex-0" />
                     <a
                       href={formData.resume}
                       target="_blank"
@@ -236,7 +237,7 @@ const UserProfile = () => {
                     <button
                       onClick={handleDeleteResume}
                       disabled={saving}
-                      className="flex-shrink-0 p-1 hover:bg-red-100 rounded transition"
+                      className="flex-0 p-1 hover:bg-red-100 rounded transition"
                       title="Delete resume"
                     >
                       <Trash2 className="w-4 h-4 text-red-500" />
