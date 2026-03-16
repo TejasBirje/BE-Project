@@ -1,18 +1,451 @@
-import React, { useEffect, useState } from 'react'
-import DashboardLayout from '../../components/layout/DashboardLayout'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { AlertCircle, MapPin, IndianRupee , Briefcase, Users, Eye, Send } from "lucide-react";
-import { API_PATHS } from "../../utils/apiPaths.js"
-import axiosInstance from "../../utils/axiosInstance.js"
-import { CATEGORIES, JOB_TYPES } from "../../utils/data"
+// import React, { useEffect, useState } from 'react'
+// import DashboardLayout from '../../components/layout/DashboardLayout'
+// import { useLocation, useNavigate } from 'react-router-dom'
+// import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send } from "lucide-react";
+// import { API_PATHS } from "../../utils/apiPaths.js"
+// import axiosInstance from "../../utils/axiosInstance.js"
+// import { CATEGORIES, JOB_TYPES } from "../../utils/data"
+// import toast from "react-hot-toast";
+// import InputField from "../../components/input/InputField"
+// import SelectField from "../../components/input/SelectField"
+// import TextareaField from "../../components/input/TextareaField"
+// import JobPostingPreview from '../../components/cards/JobPostingPreview.jsx';
+
+// const JobPostingForm = () => {
+
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const jobId = location.state?.jobId || null;
+
+//   const [formData, setFormData] = useState({
+//     jobTitle: "",
+//     location: "",
+//     category: "",
+//     jobType: "",
+//     description: "",
+//     requirements: "",
+//     salaryMin: "",
+//     salaryMax: "",
+//   });
+
+//   const [errors, setErrors] = useState({});
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [isPreview, setIsPreview] = useState(false);
+
+//   const handleInputChange = (field, value) => {
+//     setFormData((prev) => ({
+//       ...prev, [field]: value,
+//     }));
+
+//     if (errors[field]) {
+//       setErrors((prev) => ({
+//         ...prev,
+//         [field]: "",
+//       }))
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const validateErrors = validateForm(formData);
+
+//     if (Object.keys(validateErrors).length > 0) {
+//       setErrors(validateErrors);
+//       return;
+//     }
+
+//     setIsSubmitting(true);
+
+//     const jobPayload = {
+//       title: formData.jobTitle,
+//       description: formData.description,
+//       requirements: formData.requirements,
+//       location: formData.location,
+//       category: formData.category,
+//       type: formData.jobType,
+//       salaryMin: Number(formData.salaryMin),
+//       salaryMax: Number(formData.salaryMax),
+//     };
+
+//     try {
+//       const response = jobId
+//         ? await axiosInstance.put(API_PATHS.JOBS.UPDATE_JOB(jobId), jobPayload)
+//         : await axiosInstance.post(API_PATHS.JOBS.POST_JOB, jobPayload);
+
+//       if (response.status === 200 || response.status === 201) {
+//         toast.success(jobId ? "Job Updated Successfully!" : "Job Posted Successfully!");
+
+//         setFormData({
+//           title: "",
+//           description: "",
+//           requirements: "",
+//           location: "",
+//           category: "",
+//           type: "",
+//           salaryMin: "",
+//           salaryMax: "",
+//         });
+
+//         navigate("/employer-dashboard");
+//         return;
+//       };
+
+//       console.log("Unexpected response: ", response);
+//       toast.error("Something went wrong. Please try again.", error);
+
+//     } catch (error) {
+//       console.log("Unexpected error: ", error);
+//       toast.error("Failed to post/update job. Please try again.", error);
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   }
+
+//   // Form validation helper
+//   const validateForm = (formData) => {
+//     const errors = {};
+
+//     if (!formData.jobTitle.trim()) {
+//       errors.jobTitle = "Job title is required"
+//     }
+
+//     if (!formData.category) {
+//       errors.category = "Please select a category"
+//     }
+
+//     if (!formData.jobType) {
+//       errors.jobType = "Please select a job type"
+//     }
+
+//     if (!formData.description.trim()) {
+//       errors.description = "Job description is required"
+//     }
+
+//     if (!formData.requirements.trim()) {
+//       errors.requirements = "Job requirements are required"
+//     }
+
+//     if (!formData.salaryMin || !formData.salaryMax) {
+//       errors.salary = "Both minimum and maximum salary are required"
+//     } else if (parseInt(formData.salaryMin) >= parseInt(formData.salaryMax)) {
+//       errors.salary = "Maximum salary must be greater than minimum salary"
+//     }
+
+//     return errors;
+//   }
+
+//   const isFormValid = () => {
+//     const validateErrors = validateForm(formData);
+//     return Object.keys(validateErrors).length === 0;
+//   }
+
+//   useEffect(() => {
+//     const fetchJobDetails = async () => {
+//       if (!jobId) return;
+
+//       try {
+//         const response = await axiosInstance.get(
+//           API_PATHS.JOBS.GET_JOB_BY_ID(jobId)
+//         );
+
+//         const jobData = response.data;
+
+//         if (jobData) {
+//           setFormData((prev) => ({
+//             ...prev,
+//             jobTitle: jobData.title || "",
+//             location: jobData.location || "",
+//             category: jobData.category || "",
+//             jobType: jobData.jobType || "",
+//             description: jobData.description || "",
+//             requirements: jobData.requirements || "",
+//             salaryMin: jobData.salaryMin || 0,
+//             salaryMax: jobData.salaryMax || 0,
+//           }));
+//         }
+//       } catch (error) {
+//         console.log("Error fetching job details");
+//         if (error.response) {
+//           console.log("API Error:", error.response.data.message);
+//         }
+//       }
+//     };
+
+//     fetchJobDetails();
+//   }, [jobId]);
+
+//   if (isPreview) {
+//     return (
+//       <DashboardLayout activeMenu={"post-job"}>
+//         <JobPostingPreview formData={formData} setIsPreview={setIsPreview} />
+//       </DashboardLayout>
+//     )
+//   }
+
+//   return (
+//     <DashboardLayout activeMenu={"post-job"}>
+//       <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-4xl mx-auto">
+//           <div className="bg-white shadow-xl rounded-2xl p-6">
+//             <div className="flex items-center justify-between mb-8">
+//               <div>
+//                 <h2 className="text-xl font-bold bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+//                   Post a New Job
+//                 </h2>
+//                 <p className="text-sm text-gray-600 mt-1">
+//                   Fill out the form below to create job posting
+//                 </p>
+//               </div>
+//               <div className="flex items-center space-x-2">
+//                 <button className="group flex items-center space-x-2 px-6 py-3 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-linear-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5" onClick={() => setIsPreview(true)} disabled={!isFormValid()}>
+//                   <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+//                   <span className="">Preview</span>
+//                 </button>
+//               </div>
+//             </div>
+
+//             <div className="space-y-6">
+//               {/* Job Title */}
+//               <InputField
+//                 label="Job Title"
+//                 id="jobTitle"
+//                 placeholder="e.g. Senior Frontend Developer"
+//                 value={formData.jobTitle}
+//                 onChange={(e) => handleInputChange("jobTitle", e.target.value)}
+//                 error={errors.jobTitle}
+//                 required
+//                 icon={Briefcase}
+//               />
+
+//               {/* Location and Remote */}
+//               <div className="space-y-4">
+//                 <div className="flex flex-col sm:flex-row sm:items-end sm:space-x-4 space-y-4 sm:space-y-0">
+//                   <div className="flex-1">
+//                     <InputField
+//                       id="location"
+//                       label="Location"
+//                       placeHolder="e.g. Mumbai, India"
+//                       value={formData.location}
+//                       onChange={(e) => handleInputChange("location", e.target.value)}
+//                       error={errors.location}
+//                       icon={MapPin}
+//                     />
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Category and Job Type */}
+//               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                 <SelectField
+//                   label="Category"
+//                   id="category"
+//                   value={formData.category}
+//                   onChange={(e) => handleInputChange("category", e.target.value)}
+//                   options={CATEGORIES}
+//                   placeHolder="Select Category"
+//                   error={errors.category}
+//                   required
+//                   icon={Users}
+//                 />
+
+//                 <SelectField
+//                   label="Job Type"
+//                   id="jobType"
+//                   value={formData.jobType}
+//                   onChange={(e) => handleInputChange("jobType", e.target.value)}
+//                   options={JOB_TYPES}
+//                   placeHolder="Select Job Type"
+//                   error={errors.jobType}
+//                   required
+//                   icon={Briefcase}
+//                 />
+//               </div>
+
+//               {/* Description */}
+//               <TextareaField
+//                 label="Job Description"
+//                 id="description"
+//                 placeholder="Describe the role and responsibilities..."
+//                 value={formData.description}
+//                 onChange={(e) =>
+//                   handleInputChange("description", e.target.value)
+//                 }
+//                 error={errors.description}
+//                 helperText="Include key responsibilities, day-to-day task, etc."
+//                 required
+//               />
+
+//               {/* Requirements */}
+//               <TextareaField
+//                 label="Requirements"
+//                 id="requirements"
+//                 placeholder="List requirements and skills..."
+//                 value={formData.requirements}
+//                 onChange={(e) =>
+//                   handleInputChange("requirements", e.target.value)
+//                 }
+//                 error={errors.description}
+//                 helperText="Include required skills, experience level, education, certifications, etc."
+//                 required
+//               />
+
+//               {/* Salary Range */}
+//               <div className="space-y-2">
+//                 <label className="block text-sm font-medium text-gray-700">
+//                   Salary Range <span className="text-red-500">*</span>
+//                 </label>
+//                 <div className="grid grid-cols-3 gap-3">
+//                   <div className="relative">
+//                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+//                       <DollarSign className="h-5 w-5 text-gray-400" />
+//                     </div>
+//                     <input
+//                       type="number"
+//                       placeholder="Min"
+//                       value={formData.salaryMin}
+//                       onChange={(e) => handleInputChange("salaryMin", e.target.value)}
+//                       className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:border-blue-500 transition-colors duration-200"
+//                     />
+
+//                   </div>
+//                   <div className="relative">
+//                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+//                       <DollarSign className="h-5 w-5 text-gray-400" />
+//                     </div>
+//                     <input
+//                       type="number"
+//                       placeholder="Max"
+//                       value={formData.salaryMax}
+//                       onChange={(e) => handleInputChange("salaryMax", e.target.value)}
+//                       className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:border-blue-500 transition-colors duration-200"
+//                     />
+//                   </div>
+//                 </div>
+
+//               </div>
+//               {errors.salary && (
+//                 <div className="flex items-center space-x-1 text-sm text-red-600">
+//                   <AlertCircle className="h-4 w-4" />
+//                   <span className="">{errors.salary}</span>
+//                 </div>
+//               )}
+//             </div>
+
+//             {/* Submit Button */}
+//             <div className="pt-2">
+//               <button
+//                 onClick={handleSubmit}
+//                 disabled={isSubmitting || !isFormValid}
+//                 className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed outline-non transition-colors duration-200"
+//               >
+//                 {isSubmitting ? (
+//                   <>
+//                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2">
+//                       Publishing Job...
+//                     </div>
+//                   </>
+//                 ) : (
+//                   <>
+//                     <Send className="h-5 w-5 mr-2" />
+//                     Publish Job
+//                   </>
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </DashboardLayout>
+//   )
+// }
+
+// export default JobPostingForm
+
+import React, { useEffect, useState } from "react";
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  AlertCircle,
+  MapPin,
+  IndianRupee,
+  Briefcase,
+  Users,
+  Eye,
+  Send,
+  FileText,
+  CheckCircle2,
+} from "lucide-react";
+import { API_PATHS } from "../../utils/apiPaths.js";
+import axiosInstance from "../../utils/axiosInstance.js";
+import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import toast from "react-hot-toast";
-import InputField from "../../components/input/InputField"
-import SelectField from "../../components/input/SelectField"
-import TextareaField from "../../components/input/TextareaField"
-import JobPostingPreview from '../../components/cards/JobPostingPreview.jsx';
+import InputField from "../../components/input/InputField";
+import SelectField from "../../components/input/SelectField";
+import TextareaField from "../../components/input/TextareaField";
+import JobPostingPreview from "../../components/cards/JobPostingPreview.jsx";
+
+/* ── Progress step indicator ── */
+const steps = ["Basic Info", "Details", "Compensation"];
+
+const StepIndicator = ({ current }) => (
+  <div className="flex items-center gap-0 mb-8">
+    {steps.map((label, i) => {
+      const done = i < current;
+      const active = i === current;
+      return (
+        <React.Fragment key={i}>
+          <div className="flex flex-col items-center gap-1.5">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-300 ${
+                done
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : active
+                    ? "bg-white border-blue-600 text-blue-600"
+                    : "bg-white border-slate-200 text-slate-400"
+              }`}
+            >
+              {done ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
+            </div>
+            <span
+              className={`text-[10px] font-semibold whitespace-nowrap hidden sm:block ${
+                active
+                  ? "text-blue-600"
+                  : done
+                    ? "text-slate-600"
+                    : "text-slate-400"
+              }`}
+            >
+              {label}
+            </span>
+          </div>
+          {i < steps.length - 1 && (
+            <div
+              className={`flex-1 h-0.5 mx-2 mb-4 rounded-full transition-all duration-300 ${
+                done ? "bg-blue-600" : "bg-slate-200"
+              }`}
+            />
+          )}
+        </React.Fragment>
+      );
+    })}
+  </div>
+);
+
+/* ── Which step each field belongs to ── */
+const getStep = (formData) => {
+  const hasBasic =
+    formData.jobTitle &&
+    formData.location &&
+    formData.category &&
+    formData.jobType;
+  const hasDetails = formData.description && formData.requirements;
+  if (!hasBasic) return 0;
+  if (!hasDetails) return 1;
+  return 2;
+};
 
 const JobPostingForm = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
   const jobId = location.state?.jobId || null;
@@ -33,30 +466,37 @@ const JobPostingForm = () => {
   const [isPreview, setIsPreview] = useState(false);
 
   const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev, [field]: value,
-    }));
-
-    if (errors[field]) {
-      setErrors((prev) => ({
-        ...prev,
-        [field]: "",
-      }))
-    }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
   };
+
+  const validateForm = (data) => {
+    const e = {};
+    if (!data.jobTitle.trim()) e.jobTitle = "Job title is required";
+    if (!data.category) e.category = "Please select a category";
+    if (!data.jobType) e.jobType = "Please select a job type";
+    if (!data.description.trim()) e.description = "Job description is required";
+    if (!data.requirements.trim())
+      e.requirements = "Job requirements are required";
+    if (!data.salaryMin || !data.salaryMax) {
+      e.salary = "Both minimum and maximum salary are required";
+    } else if (parseInt(data.salaryMin) >= parseInt(data.salaryMax)) {
+      e.salary = "Maximum salary must be greater than minimum salary";
+    }
+    return e;
+  };
+
+  const isFormValid = () => Object.keys(validateForm(formData)).length === 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const validateErrors = validateForm(formData);
-
     if (Object.keys(validateErrors).length > 0) {
       setErrors(validateErrors);
       return;
     }
 
     setIsSubmitting(true);
-
     const jobPayload = {
       title: formData.jobTitle,
       description: formData.description,
@@ -68,90 +508,45 @@ const JobPostingForm = () => {
       salaryMax: Number(formData.salaryMax),
     };
 
-
     try {
       const response = jobId
         ? await axiosInstance.put(API_PATHS.JOBS.UPDATE_JOB(jobId), jobPayload)
         : await axiosInstance.post(API_PATHS.JOBS.POST_JOB, jobPayload);
 
       if (response.status === 200 || response.status === 201) {
-        toast.success(jobId ? "Job Updated Successfully!" : "Job Posted Successfully!");
-
+        toast.success(
+          jobId ? "Job Updated Successfully!" : "Job Posted Successfully!",
+        );
         setFormData({
-          title: "",
-          description: "",
-          requirements: "",
+          jobTitle: "",
           location: "",
           category: "",
-          type: "",
+          jobType: "",
+          description: "",
+          requirements: "",
           salaryMin: "",
           salaryMax: "",
         });
-
         navigate("/employer-dashboard");
         return;
-      };
-
-      console.log("Unexpected response: ", response);
-      toast.error("Something went wrong. Please try again.", error);
-
+      }
+      toast.error("Something went wrong. Please try again.");
     } catch (error) {
       console.log("Unexpected error: ", error);
-      toast.error("Failed to post/update job. Please try again.", error);
+      toast.error("Failed to post/update job. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  // Form validation helper
-  const validateForm = (formData) => {
-    const errors = {};
-
-    if (!formData.jobTitle.trim()) {
-      errors.jobTitle = "Job title is required"
-    }
-
-    if (!formData.category) {
-      errors.category = "Please select a category"
-    }
-
-    if (!formData.jobType) {
-      errors.jobType = "Please select a job type"
-    }
-
-    if (!formData.description.trim()) {
-      errors.description = "Job description is required"
-    }
-
-    if (!formData.requirements.trim()) {
-      errors.requirements = "Job requirements are required"
-    }
-
-    if (!formData.salaryMin || !formData.salaryMax) {
-      errors.salary = "Both minimum and maximum salary are required"
-    } else if (parseInt(formData.salaryMin) >= parseInt(formData.salaryMax)) {
-      errors.salary = "Maximum salary must be greater than minimum salary"
-    }
-
-    return errors;
-  }
-
-  const isFormValid = () => {
-    const validateErrors = validateForm(formData);
-    return Object.keys(validateErrors).length === 0;
-  }
+  };
 
   useEffect(() => {
     const fetchJobDetails = async () => {
       if (!jobId) return;
-
       try {
         const response = await axiosInstance.get(
-          API_PATHS.JOBS.GET_JOB_BY_ID(jobId)
+          API_PATHS.JOBS.GET_JOB_BY_ID(jobId),
         );
-
         const jobData = response.data;
-
         if (jobData) {
           setFormData((prev) => ({
             ...prev,
@@ -166,49 +561,65 @@ const JobPostingForm = () => {
           }));
         }
       } catch (error) {
-        console.log("Error fetching job details");
-        if (error.response) {
-          console.log("API Error:", error.response.data.message);
-        }
+        console.log("Error fetching job details", error);
       }
     };
-
     fetchJobDetails();
   }, [jobId]);
 
-
   if (isPreview) {
     return (
-      <DashboardLayout activeMenu={"post-job"}>
+      <DashboardLayout activeMenu="post-job">
         <JobPostingPreview formData={formData} setIsPreview={setIsPreview} />
       </DashboardLayout>
-    )
+    );
   }
 
+  const currentStep = getStep(formData);
+
   return (
-    <DashboardLayout activeMenu={"post-job"}>
-      <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white shadow-xl rounded-2xl p-6">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-xl font-bold bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                  Post a New Job
-                </h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Fill out the form below to create job posting
-                </p>
+    <DashboardLayout activeMenu="post-job">
+      <div className="max-w-2xl mx-auto pb-12">
+        {/* Page header */}
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+              {jobId ? "Edit Job Posting" : "Post a New Job"}
+            </h1>
+            <p className="text-sm text-slate-400 mt-1">
+              {jobId
+                ? "Update your job listing details below"
+                : "Fill out the form to publish a new position"}
+            </p>
+          </div>
+
+          <button
+            onClick={() => setIsPreview(true)}
+            disabled={!isFormValid()}
+            className="flex items-center gap-2 text-sm font-semibold text-slate-600 border border-slate-200 bg-white px-4 py-2.5 rounded-xl hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+          >
+            <Eye className="w-4 h-4" />
+            Preview
+          </button>
+        </div>
+
+        {/* Step progress */}
+        <StepIndicator current={currentStep} />
+
+        {/* Form card */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          {/* Section: Basic Info */}
+          <div className="px-6 pt-6 pb-5 border-b border-slate-100">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Briefcase className="w-3 h-3 text-white" />
               </div>
-              <div className="flex items-center space-x-2">
-                <button className="group flex items-center space-x-2 px-6 py-3 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-linear-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5" onClick={() => setIsPreview(true)} disabled={!isFormValid()}>
-                  <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                  <span className="">Preview</span>
-                </button>
-              </div>
+              <h2 className="text-sm font-semibold text-slate-800">
+                Basic Information
+              </h2>
             </div>
 
-            <div className="space-y-6">
-              {/* Job Title */}
+            <div className="space-y-4">
               <InputField
                 label="Job Title"
                 id="jobTitle"
@@ -220,37 +631,30 @@ const JobPostingForm = () => {
                 icon={Briefcase}
               />
 
-              {/* Location and Remote */}
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-end sm:space-x-4 space-y-4 sm:space-y-0">
-                  <div className="flex-1">
-                    <InputField
-                      id="location"
-                      label="Location"
-                      placeHolder="e.g. Mumbai, India"
-                      value={formData.location}
-                      onChange={(e) => handleInputChange("location", e.target.value)}
-                      error={errors.location}
-                      icon={MapPin}
-                    />
-                  </div>
-                </div>
-              </div>
+              <InputField
+                id="location"
+                label="Location"
+                placeHolder="e.g. Mumbai, India"
+                value={formData.location}
+                onChange={(e) => handleInputChange("location", e.target.value)}
+                error={errors.location}
+                icon={MapPin}
+              />
 
-              {/* Category and Job Type */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <SelectField
                   label="Category"
                   id="category"
                   value={formData.category}
-                  onChange={(e) => handleInputChange("category", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("category", e.target.value)
+                  }
                   options={CATEGORIES}
                   placeHolder="Select Category"
                   error={errors.category}
                   required
                   icon={Users}
                 />
-
                 <SelectField
                   label="Job Type"
                   id="jobType"
@@ -263,8 +667,21 @@ const JobPostingForm = () => {
                   icon={Briefcase}
                 />
               </div>
+            </div>
+          </div>
 
-              {/* Description */}
+          {/* Section: Details */}
+          <div className="px-6 py-5 border-b border-slate-100">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-6 h-6 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <FileText className="w-3 h-3 text-white" />
+              </div>
+              <h2 className="text-sm font-semibold text-slate-800">
+                Job Details
+              </h2>
+            </div>
+
+            <div className="space-y-4">
               <TextareaField
                 label="Job Description"
                 id="description"
@@ -274,11 +691,9 @@ const JobPostingForm = () => {
                   handleInputChange("description", e.target.value)
                 }
                 error={errors.description}
-                helperText="Include key responsibilities, day-to-day task, etc."
+                helperText="Include key responsibilities, day-to-day tasks, team structure, etc."
                 required
               />
-
-              {/* Requirements */}
               <TextareaField
                 label="Requirements"
                 id="requirements"
@@ -287,81 +702,93 @@ const JobPostingForm = () => {
                 onChange={(e) =>
                   handleInputChange("requirements", e.target.value)
                 }
-                error={errors.description}
+                error={errors.requirements}
                 helperText="Include required skills, experience level, education, certifications, etc."
                 required
               />
+            </div>
+          </div>
 
-              {/* Salary Range */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Salary Range <span className="text-red-500">*</span>
-                </label>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <IndianRupee  className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="number"
-                      placeholder="Min"
-                      value={formData.salaryMin}
-                      onChange={(e) => handleInputChange("salaryMin", e.target.value)}
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:border-blue-500 transition-colors duration-200"
-                    />
-
-                  </div>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <IndianRupee  className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={formData.salaryMax}
-                      onChange={(e) => handleInputChange("salaryMax", e.target.value)}
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 focus:border-blue-500 transition-colors duration-200"
-                    />
-                  </div>
-                </div>
-
-
-
+          {/* Section: Compensation */}
+          <div className="px-6 py-5">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-6 h-6 bg-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <IndianRupee className="w-3 h-3 text-white" />
               </div>
+              <h2 className="text-sm font-semibold text-slate-800">
+                Compensation
+              </h2>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+                Salary Range (per year) <span className="text-red-500">*</span>
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative">
+                  <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                  <input
+                    type="number"
+                    placeholder="Minimum"
+                    value={formData.salaryMin}
+                    onChange={(e) =>
+                      handleInputChange("salaryMin", e.target.value)
+                    }
+                    className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none
+                               focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all placeholder:text-slate-400 text-slate-800"
+                  />
+                </div>
+                <div className="relative">
+                  <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                  <input
+                    type="number"
+                    placeholder="Maximum"
+                    value={formData.salaryMax}
+                    onChange={(e) =>
+                      handleInputChange("salaryMax", e.target.value)
+                    }
+                    className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none
+                               focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all placeholder:text-slate-400 text-slate-800"
+                  />
+                </div>
+              </div>
+
               {errors.salary && (
-                <div className="flex items-center space-x-1 text-sm text-red-600">
-                  <AlertCircle className="h-4 w-4" />
-                  <span className="">{errors.salary}</span>
+                <div className="flex items-center gap-1.5 mt-2.5 text-xs text-red-600">
+                  <AlertCircle className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span>{errors.salary}</span>
                 </div>
               )}
             </div>
-
-            {/* Submit Button */}
-            <div className="pt-2">
-              <button
-                onClick={handleSubmit}
-                disabled={isSubmitting || !isFormValid}
-                className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed outline-non transition-colors duration-200"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2">
-                      Publishing Job...
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-5 w-5 mr-2" />
-                    Publish Job
-                  </>
-                )}
-              </button>
-            </div>
           </div>
+        </div>
+
+        {/* Submit button */}
+        <div className="mt-5">
+          <button
+            onClick={handleSubmit}
+            disabled={isSubmitting || !isFormValid()}
+            className="w-full flex items-center justify-center gap-2.5 py-3.5 text-sm font-semibold text-white
+                       bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-200
+                       shadow-sm shadow-blue-200 hover:shadow-md hover:shadow-blue-200 active:scale-[0.99]
+                       disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          >
+            {isSubmitting ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                Publishing…
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4" />
+                {jobId ? "Update Job" : "Publish Job"}
+              </>
+            )}
+          </button>
         </div>
       </div>
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export default JobPostingForm
+export default JobPostingForm;
