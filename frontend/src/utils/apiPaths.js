@@ -63,4 +63,21 @@ export const API_PATHS = {
     CALCULATE_SCORE: "/calculate_weighted_score",
     EXTRACT_KEYWORDS: "/extract_keywords",
   },
+
+  ASSESSMENT: {
+    CREATE: "/api/assessments/create",
+    MY_ASSESSMENTS: "/api/assessments/my-assessments",
+    GET_BY_ID: (id) => `/api/assessments/${id}`,
+    SEND_INVITE: "/api/assessments/invite",
+    GET_RESULTS: (id) => `/api/assessments/${id}/results`,
+    GET_CANDIDATE_RESULT: (id, candidateId) =>
+      `/api/assessments/${id}/results/${candidateId}`,
+  },
+  ATTEMPT: {
+    VALIDATE_TOKEN: (token) => `/api/attempt/invite/${token}`,
+    START: (token) => `/api/attempt/start/${token}`,
+    SAVE: (token) => `/api/attempt/save/${token}`,
+    SUBMIT: (token) => `/api/attempt/submit/${token}`,
+    RESULT: (token) => `/api/attempt/result/${token}`,
+  },
 };

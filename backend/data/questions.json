@@ -1,0 +1,776 @@
+{
+  "aptitude": [
+    {
+      "questionText": "What is 20% of 250?",
+      "options": ["40", "45", "50", "55"],
+      "correctAnswer": "50",
+      "difficulty": "easy",
+      "topic": "percentage"
+    },
+    {
+      "questionText": "The average of 5 numbers is 20. What is their total?",
+      "options": ["80", "90", "100", "120"],
+      "correctAnswer": "100",
+      "difficulty": "easy",
+      "topic": "average"
+    },
+    {
+      "questionText": "If the ratio of two numbers is 3:4 and their sum is 28, find the smaller number.",
+      "options": ["10", "12", "14", "16"],
+      "correctAnswer": "12",
+      "difficulty": "easy",
+      "topic": "ratio"
+    },
+    {
+      "questionText": "A shopkeeper gains 20% by selling a product for ₹120. What is the cost price?",
+      "options": ["90", "95", "100", "110"],
+      "correctAnswer": "100",
+      "difficulty": "medium",
+      "topic": "profit-loss"
+    },
+    {
+      "questionText": "Find the simple interest on ₹1000 at 5% for 2 years.",
+      "options": ["50", "75", "100", "120"],
+      "correctAnswer": "100",
+      "difficulty": "easy",
+      "topic": "simple-interest"
+    },
+    {
+      "questionText": "What is the compound interest on ₹1000 at 10% for 2 years?",
+      "options": ["200", "210", "220", "230"],
+      "correctAnswer": "210",
+      "difficulty": "medium",
+      "topic": "compound-interest"
+    },
+    {
+      "questionText": "The average of 10 numbers is 15. If one number is removed, the average becomes 14. What was the removed number?",
+      "options": ["20", "23", "24", "25"],
+      "correctAnswer": "24",
+      "difficulty": "medium",
+      "topic": "average"
+    },
+    {
+      "questionText": "If 5 pens cost ₹50, what is the cost of 8 pens?",
+      "options": ["70", "75", "80", "85"],
+      "correctAnswer": "80",
+      "difficulty": "easy",
+      "topic": "ratio"
+    },
+    {
+      "questionText": "A man buys an item for ₹500 and sells it for ₹550. What is the profit percentage?",
+      "options": ["8%", "10%", "12%", "15%"],
+      "correctAnswer": "10%",
+      "difficulty": "easy",
+      "topic": "profit-loss"
+    },
+    {
+      "questionText": "Find 15% of 400.",
+      "options": ["50", "55", "60", "65"],
+      "correctAnswer": "60",
+      "difficulty": "easy",
+      "topic": "percentage"
+    },
+    {
+      "questionText": "A can complete a work in 10 days. How long will it take to complete the work alone?",
+      "options": ["8", "9", "10", "12"],
+      "correctAnswer": "10",
+      "difficulty": "easy",
+      "topic": "time-work"
+    },
+    {
+      "questionText": "A can do a job in 12 days and B in 6 days. How long together?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": "4",
+      "difficulty": "medium",
+      "time": "time-work",
+      "topic": "time-work"
+    },
+    {
+      "questionText": "If A completes work in 20 days, what fraction does he finish in 5 days?",
+      "options": ["1/2", "1/3", "1/4", "1/5"],
+      "correctAnswer": "1/4",
+      "difficulty": "easy",
+      "topic": "time-work"
+    },
+    {
+      "questionText": "A and B together complete work in 8 days. If A alone takes 16 days, how long does B take?",
+      "options": ["12", "14", "16", "18"],
+      "correctAnswer": "16",
+      "difficulty": "medium",
+      "topic": "time-work"
+    },
+    {
+      "questionText": "If 4 workers complete a task in 6 days, how long will 2 workers take?",
+      "options": ["10", "12", "14", "16"],
+      "correctAnswer": "12",
+      "difficulty": "easy",
+      "topic": "time-work"
+    },
+    {
+      "questionText": "A train travels 60 km in 1 hour. How far in 2.5 hours?",
+      "options": ["120 km", "130 km", "150 km", "160 km"],
+      "correctAnswer": "150 km",
+      "difficulty": "easy",
+      "topic": "speed-distance"
+    },
+    {
+      "questionText": "A car travels at 50 km/h for 3 hours. Distance covered?",
+      "options": ["120 km", "130 km", "150 km", "160 km"],
+      "correctAnswer": "150 km",
+      "difficulty": "easy",
+      "topic": "speed-distance"
+    },
+    {
+      "questionText": "A train moving at 72 km/h. Speed in m/s?",
+      "options": ["18", "20", "22", "24"],
+      "correctAnswer": "20",
+      "difficulty": "medium",
+      "topic": "speed-distance"
+    },
+    {
+      "questionText": "If a man walks 5 km in 1 hour, how long for 15 km?",
+      "options": ["2", "3", "4", "5"],
+      "correctAnswer": "3",
+      "difficulty": "easy",
+      "topic": "speed-distance"
+    },
+    {
+      "questionText": "A car covers 120 km in 2 hours. Speed?",
+      "options": ["50", "55", "60", "65"],
+      "correctAnswer": "60",
+      "difficulty": "easy",
+      "topic": "speed-distance"
+    },
+    {
+      "questionText": "Find the HCF of 12 and 18.",
+      "options": ["3", "6", "9", "12"],
+      "correctAnswer": "6",
+      "difficulty": "easy",
+      "topic": "number-system"
+    },
+    {
+      "questionText": "Find the LCM of 4 and 6.",
+      "options": ["10", "12", "14", "16"],
+      "correctAnswer": "12",
+      "difficulty": "easy",
+      "topic": "number-system"
+    },
+    {
+      "questionText": "Which number is divisible by both 3 and 5?",
+      "options": ["10", "15", "20", "25"],
+      "correctAnswer": "15",
+      "difficulty": "easy",
+      "topic": "number-system"
+    },
+    {
+      "questionText": "What is the remainder when 25 is divided by 4?",
+      "options": ["0", "1", "2", "3"],
+      "correctAnswer": "1",
+      "difficulty": "easy",
+      "topic": "number-system"
+    },
+    {
+      "questionText": "Find the next number: 2, 4, 8, 16, ?",
+      "options": ["24", "28", "30", "32"],
+      "correctAnswer": "32",
+      "difficulty": "easy",
+      "topic": "number-system"
+    },
+    {
+      "questionText": "Probability of getting head in a coin toss?",
+      "options": ["1/4", "1/3", "1/2", "1"],
+      "correctAnswer": "1/2",
+      "difficulty": "easy",
+      "topic": "probability"
+    },
+    {
+      "questionText": "Probability of getting 6 on a die?",
+      "options": ["1/6", "1/5", "1/4", "1/3"],
+      "correctAnswer": "1/6",
+      "difficulty": "easy",
+      "topic": "probability"
+    },
+    {
+      "questionText": "Total outcomes when tossing two coins?",
+      "options": ["2", "3", "4", "5"],
+      "correctAnswer": "4",
+      "difficulty": "easy",
+      "topic": "probability"
+    },
+    {
+      "questionText": "Probability of getting an even number on a die?",
+      "options": ["1/2", "1/3", "1/4", "2/3"],
+      "correctAnswer": "1/2",
+      "difficulty": "medium",
+      "topic": "probability"
+    },
+    {
+      "questionText": "In how many ways can 3 people sit in a row?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": "6",
+      "difficulty": "easy",
+      "topic": "permutation-combination"
+    },
+    {
+      "questionText": "How many ways to choose 2 from 4?",
+      "options": ["4", "5", "6", "7"],
+      "correctAnswer": "6",
+      "difficulty": "medium",
+      "topic": "permutation-combination"
+    },
+    {
+      "questionText": "Factorial of 4?",
+      "options": ["12", "18", "24", "36"],
+      "correctAnswer": "24",
+      "difficulty": "easy",
+      "topic": "permutation-combination"
+    },
+    {
+      "questionText": "Arrangements of 2 letters from A,B,C?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": "6",
+      "difficulty": "medium",
+      "topic": "permutation-combination"
+    },
+    {
+      "questionText": "Series: 2, 4, 6, 8, ?",
+      "options": ["9", "10", "11", "12"],
+      "correctAnswer": "10",
+      "difficulty": "easy",
+      "topic": "logical-reasoning"
+    },
+    {
+      "questionText": "Find the odd one: 2, 4, 6, 9, 8",
+      "options": ["2", "4", "6", "9"],
+      "correctAnswer": "9",
+      "difficulty": "easy",
+      "topic": "logical-reasoning"
+    },
+    {
+      "questionText": "Series: 5, 10, 20, 40, ?",
+      "options": ["60", "70", "80", "90"],
+      "correctAnswer": "80",
+      "difficulty": "easy",
+      "topic": "logical-reasoning"
+    },
+    {
+      "questionText": "Find missing number: 3, 6, 9, ?",
+      "options": ["10", "11", "12", "13"],
+      "correctAnswer": "12",
+      "difficulty": "easy",
+      "topic": "logical-reasoning"
+    },
+    {
+      "questionText": "Area of square with side 4?",
+      "options": ["12", "14", "16", "18"],
+      "correctAnswer": "16",
+      "difficulty": "easy",
+      "topic": "mensuration"
+    },
+    {
+      "questionText": "Area of rectangle 5×6?",
+      "options": ["20", "25", "30", "35"],
+      "correctAnswer": "30",
+      "difficulty": "easy",
+      "topic": "mensuration"
+    },
+    {
+      "questionText": "Perimeter of square side 5?",
+      "options": ["15", "20", "25", "30"],
+      "correctAnswer": "20",
+      "difficulty": "easy",
+      "topic": "mensuration"
+    },
+    {
+      "questionText": "Area of triangle base 10 height 5?",
+      "options": ["20", "25", "30", "35"],
+      "correctAnswer": "25",
+      "difficulty": "medium",
+      "topic": "mensuration"
+    },
+    {
+      "questionText": "Father is 40 and son 10. Ratio of ages?",
+      "options": ["3:1", "4:1", "5:1", "6:1"],
+      "correctAnswer": "4:1",
+      "difficulty": "easy",
+      "topic": "ages"
+    },
+    {
+      "questionText": "A is 20 years old. B is twice his age. B's age?",
+      "options": ["30", "35", "40", "45"],
+      "correctAnswer": "40",
+      "difficulty": "easy",
+      "topic": "ages"
+    },
+    {
+      "questionText": "Average age of 4 people is 20. Total age?",
+      "options": ["60", "70", "80", "90"],
+      "correctAnswer": "80",
+      "difficulty": "easy",
+      "topic": "ages"
+    },
+    {
+      "questionText": "If marked price is ₹500 and discount 10%, selling price?",
+      "options": ["440", "450", "460", "470"],
+      "correctAnswer": "450",
+      "difficulty": "easy",
+      "topic": "discount"
+    },
+    {
+      "questionText": "If CP = ₹200 and SP = ₹180, loss?",
+      "options": ["10", "15", "20", "25"],
+      "correctAnswer": "20",
+      "difficulty": "easy",
+      "topic": "profit-loss"
+    },
+    {
+      "questionText": "Average of 4, 8, 12, 16?",
+      "options": ["8", "9", "10", "11"],
+      "correctAnswer": "10",
+      "difficulty": "easy",
+      "topic": "average"
+    },
+    {
+      "questionText": "Simplify: 5 + 3 × 2",
+      "options": ["11", "13", "16", "10"],
+      "correctAnswer": "11",
+      "difficulty": "easy",
+      "topic": "arithmetic"
+    },
+    {
+      "questionText": "Next number: 1, 1, 2, 3, 5, ?",
+      "options": ["6", "7", "8", "9"],
+      "correctAnswer": "8",
+      "difficulty": "medium",
+      "topic": "logical-reasoning"
+    },
+    {
+      "questionText": "If 2x = 10, x = ?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": "5",
+      "difficulty": "easy",
+      "topic": "algebra"
+    }
+  ],
+  "technical": [
+    {
+      "questionText": "Which scheduling algorithm gives the minimum average waiting time?",
+      "options": [
+        "FCFS",
+        "Round Robin",
+        "Shortest Job First",
+        "Priority Scheduling"
+      ],
+      "correctAnswer": "Shortest Job First",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which OS component manages hardware resources?",
+      "options": ["Compiler", "Kernel", "Shell", "Loader"],
+      "correctAnswer": "Kernel",
+      "difficulty": "easy",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which memory is volatile?",
+      "options": ["ROM", "Hard Disk", "RAM", "SSD"],
+      "correctAnswer": "RAM",
+      "difficulty": "easy",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Deadlock occurs when processes wait for resources held by each other. Which condition is necessary for deadlock?",
+      "options": ["Mutual Exclusion", "Interrupt", "Paging", "Spooling"],
+      "correctAnswer": "Mutual Exclusion",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which technique is used to avoid deadlock?",
+      "options": ["Banker's Algorithm", "FIFO", "LRU", "Paging"],
+      "correctAnswer": "Banker's Algorithm",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which memory management technique divides memory into fixed size blocks?",
+      "options": ["Segmentation", "Paging", "Swapping", "Partitioning"],
+      "correctAnswer": "Paging",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which scheduling algorithm uses time quantum?",
+      "options": ["Round Robin", "FCFS", "SJF", "Priority"],
+      "correctAnswer": "Round Robin",
+      "difficulty": "easy",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Thrashing occurs when?",
+      "options": [
+        "CPU utilization increases",
+        "Excessive paging occurs",
+        "Disk is full",
+        "Cache memory fails"
+      ],
+      "correctAnswer": "Excessive paging occurs",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which OS structure uses layers of abstraction?",
+      "options": ["Layered OS", "Monolithic OS", "Microkernel", "Hybrid"],
+      "correctAnswer": "Layered OS",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+    {
+      "questionText": "Which system call creates a new process in UNIX?",
+      "options": ["fork()", "exec()", "wait()", "exit()"],
+      "correctAnswer": "fork()",
+      "difficulty": "medium",
+      "topic": "operating-system"
+    },
+
+    {
+      "questionText": "Which device operates at the Network layer of OSI model?",
+      "options": ["Switch", "Router", "Hub", "Bridge"],
+      "correctAnswer": "Router",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "How many layers are in the OSI model?",
+      "options": ["5", "6", "7", "8"],
+      "correctAnswer": "7",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which protocol is used to transfer web pages?",
+      "options": ["FTP", "HTTP", "SMTP", "SNMP"],
+      "correctAnswer": "HTTP",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which protocol is used to send emails?",
+      "options": ["HTTP", "FTP", "SMTP", "POP3"],
+      "correctAnswer": "SMTP",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "What does DNS do?",
+      "options": [
+        "Encrypts data",
+        "Maps domain names to IP addresses",
+        "Transfers files",
+        "Controls routing"
+      ],
+      "correctAnswer": "Maps domain names to IP addresses",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which topology connects all devices to a central hub?",
+      "options": ["Ring", "Star", "Bus", "Mesh"],
+      "correctAnswer": "Star",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which protocol provides reliable data transmission?",
+      "options": ["UDP", "TCP", "IP", "ICMP"],
+      "correctAnswer": "TCP",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "What is the default port of HTTP?",
+      "options": ["21", "25", "80", "443"],
+      "correctAnswer": "80",
+      "difficulty": "medium",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which layer handles error detection and correction?",
+      "options": ["Network", "Transport", "Data Link", "Application"],
+      "correctAnswer": "Data Link",
+      "difficulty": "medium",
+      "topic": "computer-network"
+    },
+    {
+      "questionText": "Which protocol is connectionless?",
+      "options": ["TCP", "UDP", "HTTP", "FTP"],
+      "correctAnswer": "UDP",
+      "difficulty": "easy",
+      "topic": "computer-network"
+    },
+
+    {
+      "questionText": "Which SQL command is used to retrieve data?",
+      "options": ["INSERT", "UPDATE", "SELECT", "DELETE"],
+      "correctAnswer": "SELECT",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which key uniquely identifies a record in a table?",
+      "options": [
+        "Foreign Key",
+        "Primary Key",
+        "Candidate Key",
+        "Composite Key"
+      ],
+      "correctAnswer": "Primary Key",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which normal form removes partial dependency?",
+      "options": ["1NF", "2NF", "3NF", "BCNF"],
+      "correctAnswer": "2NF",
+      "difficulty": "medium",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which SQL clause is used to filter records?",
+      "options": ["GROUP BY", "ORDER BY", "WHERE", "HAVING"],
+      "correctAnswer": "WHERE",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which join returns only matching rows?",
+      "options": ["LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "FULL JOIN"],
+      "correctAnswer": "INNER JOIN",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which command removes a table completely?",
+      "options": ["DELETE", "DROP", "TRUNCATE", "REMOVE"],
+      "correctAnswer": "DROP",
+      "difficulty": "medium",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which index improves query performance?",
+      "options": ["Clustered Index", "Primary Key", "Foreign Key", "View"],
+      "correctAnswer": "Clustered Index",
+      "difficulty": "medium",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which DBMS model uses tables?",
+      "options": ["Hierarchical", "Relational", "Network", "Object"],
+      "correctAnswer": "Relational",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which constraint prevents duplicate values?",
+      "options": ["NOT NULL", "UNIQUE", "CHECK", "DEFAULT"],
+      "correctAnswer": "UNIQUE",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+    {
+      "questionText": "Which language is used to define database schema?",
+      "options": ["DML", "DDL", "DCL", "TCL"],
+      "correctAnswer": "DDL",
+      "difficulty": "easy",
+      "topic": "dbms"
+    },
+
+    {
+      "questionText": "Which OOP principle hides internal implementation details?",
+      "options": [
+        "Encapsulation",
+        "Inheritance",
+        "Polymorphism",
+        "Abstraction"
+      ],
+      "correctAnswer": "Encapsulation",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which feature allows a class to inherit properties from another class?",
+      "options": [
+        "Encapsulation",
+        "Inheritance",
+        "Abstraction",
+        "Polymorphism"
+      ],
+      "correctAnswer": "Inheritance",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which concept allows multiple methods with the same name but different parameters?",
+      "options": [
+        "Method Overloading",
+        "Method Overriding",
+        "Inheritance",
+        "Encapsulation"
+      ],
+      "correctAnswer": "Method Overloading",
+      "difficulty": "medium",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which keyword is used to create an object in C++?",
+      "options": ["class", "object", "new", "create"],
+      "correctAnswer": "new",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which concept refers to one interface with multiple implementations?",
+      "options": [
+        "Encapsulation",
+        "Polymorphism",
+        "Inheritance",
+        "Aggregation"
+      ],
+      "correctAnswer": "Polymorphism",
+      "difficulty": "medium",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which type of inheritance involves multiple base classes?",
+      "options": ["Single", "Multiple", "Hierarchical", "Multilevel"],
+      "correctAnswer": "Multiple",
+      "difficulty": "medium",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which access specifier allows access only within the class?",
+      "options": ["Public", "Protected", "Private", "Internal"],
+      "correctAnswer": "Private",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which function is automatically called when an object is created?",
+      "options": ["Destructor", "Constructor", "Operator", "Method"],
+      "correctAnswer": "Constructor",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which concept reduces code duplication?",
+      "options": [
+        "Inheritance",
+        "Polymorphism",
+        "Encapsulation",
+        "Abstraction"
+      ],
+      "correctAnswer": "Inheritance",
+      "difficulty": "easy",
+      "topic": "oops"
+    },
+    {
+      "questionText": "Which function is automatically called when an object is destroyed?",
+      "options": ["Constructor", "Destructor", "Operator", "Method"],
+      "correctAnswer": "Destructor",
+      "difficulty": "medium",
+      "topic": "oops"
+    },
+
+    {
+      "questionText": "Which cloud model provides virtual machines to users?",
+      "options": ["SaaS", "PaaS", "IaaS", "FaaS"],
+      "correctAnswer": "IaaS",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which cloud service provides software applications over the internet?",
+      "options": ["IaaS", "PaaS", "SaaS", "DaaS"],
+      "correctAnswer": "SaaS",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which company provides AWS cloud services?",
+      "options": ["Google", "Amazon", "Microsoft", "IBM"],
+      "correctAnswer": "Amazon",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which cloud deployment model is used only by a single organization?",
+      "options": [
+        "Public Cloud",
+        "Private Cloud",
+        "Hybrid Cloud",
+        "Community Cloud"
+      ],
+      "correctAnswer": "Private Cloud",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which technology allows multiple virtual machines on a single physical machine?",
+      "options": [
+        "Virtualization",
+        "Containerization",
+        "Load Balancing",
+        "Clustering"
+      ],
+      "correctAnswer": "Virtualization",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which service model allows developers to deploy applications without managing infrastructure?",
+      "options": ["IaaS", "PaaS", "SaaS", "CaaS"],
+      "correctAnswer": "PaaS",
+      "difficulty": "medium",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which cloud type combines public and private clouds?",
+      "options": [
+        "Hybrid Cloud",
+        "Community Cloud",
+        "Private Cloud",
+        "Edge Cloud"
+      ],
+      "correctAnswer": "Hybrid Cloud",
+      "difficulty": "easy",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which cloud feature automatically adjusts resources based on demand?",
+      "options": ["Elasticity", "Virtualization", "Replication", "Redundancy"],
+      "correctAnswer": "Elasticity",
+      "difficulty": "medium",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which storage service in AWS stores objects?",
+      "options": ["EC2", "S3", "RDS", "Lambda"],
+      "correctAnswer": "S3",
+      "difficulty": "medium",
+      "topic": "cloud-computing"
+    },
+    {
+      "questionText": "Which computing model runs code without managing servers?",
+      "options": [
+        "Serverless Computing",
+        "Edge Computing",
+        "Grid Computing",
+        "Cluster Computing"
+      ],
+      "correctAnswer": "Serverless Computing",
+      "difficulty": "medium",
+      "topic": "cloud-computing"
+    }
+  ]
+}

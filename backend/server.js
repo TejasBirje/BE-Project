@@ -13,6 +13,8 @@ import analyticsRoutes from "./routes/analytics.route.js";
 import interviewRoutes from "./routes/interview.route.js";
 import initInterviewSocket from "./interviewServer.js";
 import { fileURLToPath } from "url";
+import assessmentRoutes from "./routes/assessment.routes.js";
+import attemptRoutes from "./routes/attempt.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +49,9 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/save-jobs", savedJobRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/interview", interviewRoutes);
+// add alongside your existing routes
+app.use("/api/assessments", assessmentRoutes);
+app.use("/api/attempt", attemptRoutes);
 
 // Server uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));

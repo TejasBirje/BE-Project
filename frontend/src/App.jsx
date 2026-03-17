@@ -24,6 +24,11 @@ import ProtectedRoute from "./routes/ProtectedRoutes";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import InterviewHistory from "./pages/Interview/InterviewHistory";
 import InterviewReview from "./pages/Interview/InterviewReview";
+import CreateAssessment from "./pages/Assessment/employer/CreateAssessment";
+import AssessmentResults from "./pages/Assessment/employer/AssessmentResults";
+import AssessmentInstructions from "./pages/Assessment/candidate/AssessmentInstructions";
+import AssessmentTest from "./pages/Assessment/candidate/AssessmentTest";
+import AssessmentResult from "./pages/Assessment/candidate/AssessmentResult";
 
 function App() {
   return (
@@ -43,6 +48,18 @@ function App() {
             <Route path="/interview" element={<InterviewPage />} />
             <Route path="/interview-history" element={<InterviewHistory />} />
             <Route path="/interview/review/:id" element={<InterviewReview />} />
+            <Route
+              path="/assessment/:token"
+              element={<AssessmentInstructions />}
+            />
+            <Route
+              path="/assessment/:token/test"
+              element={<AssessmentTest />}
+            />
+            <Route
+              path="/assessment/:token/result"
+              element={<AssessmentResult />}
+            />
             {/* Protected Routes */}
             <Route element={<ProtectedRoute requiredRole="employer" />}>
               <Route
@@ -55,6 +72,14 @@ function App() {
               <Route
                 path="/company-profile"
                 element={<EmployerProfilePage />}
+              />
+              <Route
+                path="/employer/assessments/create"
+                element={<CreateAssessment />}
+              />
+              <Route
+                path="/employer/assessments/:assessmentId/results"
+                element={<AssessmentResults />}
               />
             </Route>
             {/* Catch all route */}
