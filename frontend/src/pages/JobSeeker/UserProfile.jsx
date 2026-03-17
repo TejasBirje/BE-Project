@@ -409,6 +409,7 @@ const UserProfile = () => {
         toast.success("Profile updated successfully");
         setProfileData(formData);
         updateUser({ name: formData.name, avatar: formData.avatar });
+        navigate("/find-jobs")
       }
     } catch (error) {
       console.error("Save Error:", error);
