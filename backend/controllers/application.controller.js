@@ -232,11 +232,146 @@ export const updateStatus = async (req, res) => {
 };
 
 // ── PUT /api/applications/:id/invite — Employer sends AI interview invite ──
+// export const sendInterviewInvite = async (req, res) => {
+//   try {
+//     const app = await Application.findById(req.params.id)
+//       .populate("job")
+//       .populate("applicant");
+
+//     if (!app) {
+//       return res.status(404).json({ message: "Application not found" });
+//     }
+
+//     // Authorization check
+//     if (app.job.company.toString() !== req.user._id.toString()) {
+//       return res.status(403).json({ message: "Not authorized" });
+//     }
+
+//     // Generate AI interview link
+//     const interviewLink = `http://localhost:5173/interview/review/${app._id}`;
+
+//     // Email transporter
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASS,
+//       },
+//     });
+
+//     // Send email
+//     await transporter.sendMail({
+//       from: process.env.EMAIL_USER,
+//       to: app.applicant.email,
+//       subject: "AI Interview Invitation",
+//       html: `<div style="padding:40px 34px;text-align:center;color:#374151;">
+  
+//   <h2 style="font-size:24px;margin-bottom:10px;">
+//     Hi ${app.applicant.name},
+//   </h2>
+
+//   <p style="font-size:17px;line-height:1.7;margin-bottom:18px;">
+//     Congratulations! After reviewing your application, 
+//     <b>${req.user.name}</b> from <b>${req.user.companyName || "the company"}</b> 
+//     has shortlisted you for the next stage of the hiring process for the position of 
+//     <b style="color:#4f46e5;">${app.job.title}</b>.
+//   </p>
+
+//   <p style="font-size:16px;margin-bottom:30px;">
+//     Please begin your <b>AI-powered interview</b> by clicking the button below.
+//   </p>
+
+//   <!-- Button -->
+//   <a href="${interviewLink}" style="
+//       display:inline-block;
+//       padding:15px 36px;
+//       background:#6d28d9;
+//       color:white;
+//       font-size:17px;
+//       font-weight:bold;
+//       text-decoration:none;
+//       border-radius:8px;
+//       box-shadow:0 4px 12px rgba(0,0,0,0.18);
+//   ">
+//     Start AI Interview
+//   </a>
+
+//   <!-- Info Section -->
+//   <div style="
+//       margin-top:30px;
+//       text-align:left;
+//       background:#f9fafb;
+//       padding:20px 24px;
+//       border-radius:10px;
+//       border:1px solid #e5e7eb;
+//   ">
+//     <h3 style="margin-bottom:12px;color:#111827;">
+//       📌 Interview Guidelines
+//     </h3>
+
+//     <ul style="padding-left:18px;font-size:14px;line-height:1.7;color:#4b5563;">
+//       <li>Ensure you have a <b>stable internet connection</b>.</li>
+//       <li>Complete the interview in a <b>quiet environment</b>.</li>
+//       <li>Answer questions clearly and concisely.</li>
+//       <li>The system evaluates both <b>technical knowledge</b> and <b>communication</b>.</li>
+//       <li>Do not refresh or close the browser during the interview.</li>
+//     </ul>
+
+//     <h3 style="margin:18px 0 10px;color:#111827;">
+//       💡 Tips to Perform Well
+//     </h3>
+
+//     <ul style="padding-left:18px;font-size:14px;line-height:1.7;color:#4b5563;">
+//       <li>Read each question carefully before answering.</li>
+//       <li>Provide structured and logical responses.</li>
+//       <li>Use relevant examples where possible.</li>
+//       <li>Be confident and communicate clearly.</li>
+//     </ul>
+//   </div>
+
+//   <p style="
+//       margin-top:28px;
+//       font-size:14px;
+//       color:#6b7280;
+//       line-height:1.6;
+//       text-align:center;
+//   ">
+//     ⏱ The interview will take approximately <b>5–10 minutes</b>.  
+//     Please complete it at your earliest convenience.
+//   </p>
+
+//   <!-- Backup link -->
+//   <p style="margin-top:18px;font-size:13px;color:#9ca3af;">
+//     If the button doesn't work, copy and paste this link into your browser:
+//     <br>
+//     <span style="color:#4f46e5;">${interviewLink}</span>
+//   </p>
+
+// </div>`
+//     });
+
+//     // Update DB
+//     app.interviewInvited = true;
+//     await app.save();
+
+//     res.json({
+//       message: "AI Interview invitation sent",
+//       applicationId: app._id,
+//     });
+
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// ── PUT /api/applications/:id/invite — Employer sends AI interview invite ──
 export const sendInterviewInvite = async (req, res) => {
   try {
     const app = await Application.findById(req.params.id)
       .populate("job")
-      .populate("applicant");
+      .populate("applicant")
+      .populate("resume"); // IMPORTANT
 
     if (!app) {
       return res.status(404).json({ message: "Application not found" });
@@ -247,8 +382,32 @@ export const sendInterviewInvite = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // Generate AI interview link
-    const interviewLink = `http://localhost:5173/interview/review/${app._id}`;
+    // Prevent duplicate invites
+    if (app.interviewInvited) {
+      return res.status(400).json({
+        message: "Interview invite already sent",
+      });
+    }
+
+    // Get resumeId (from Application or fallback to User)
+    const resumeId =
+      app.resume?._id?.toString() ||
+      app.applicant?.resumeId?.toString();
+
+    if (!resumeId) {
+      return res.status(400).json({
+        message: "Candidate does not have a resume",
+      });
+    }
+
+    // Prepare Job Description (JD)
+    const jdRaw = `${app.job.title}\n\n${app.job.description}\n\n${app.job.requirements}`;
+    const encodedJD = encodeURIComponent(jdRaw);
+
+    // Interview link (use env for production)
+    const BASE_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
+    const interviewLink = `${BASE_URL}/interview?resumeId=${resumeId}&jd=${encodedJD}&limit=5`;
 
     // Email transporter
     const transporter = nodemailer.createTransport({
@@ -264,102 +423,148 @@ export const sendInterviewInvite = async (req, res) => {
       from: process.env.EMAIL_USER,
       to: app.applicant.email,
       subject: "AI Interview Invitation",
-      html: `
-<div style="background:#f3f4f6;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
+      html: `<div style="background:#f3f4f6;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
   <div style="
-      max-width:620px;
+      max-width:640px;
       margin:auto;
       background:white;
-      border-radius:12px;
+      border-radius:14px;
       overflow:hidden;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      box-shadow:0 8px 24px rgba(0,0,0,0.08);
   ">
     
-    <!-- Header -->
+    <!-- HEADER -->
     <div style="
-        background:linear-gradient(135deg,#6d28d9,#4f46e5);
-        padding:32px;
+        background:linear-gradient(135deg,#4f46e5,#6d28d9);
+        padding:28px 20px;
         text-align:center;
         color:white;
     ">
-      <h1 style="margin:0;font-size:30px;">AI Interview Invitation</h1>
-      <p style="margin-top:8px;font-size:16px;opacity:0.9;">
-        You've been shortlisted for the next stage
-      </p>
+      <h1 style="margin:0;font-size:26px;font-weight:700;">
+        ${req.user.companyName || "Hiring Team"}
+      </h1>
     </div>
 
-    <!-- Content -->
-    <div style="padding:40px 34px;text-align:center;color:#374151;">
+    <!-- TITLE STRIP -->
+    <div style="
+        background:#eef2ff;
+        padding:14px;
+        text-align:center;
+        font-weight:600;
+        color:#4338ca;
+        font-size:15px;
+    ">
+      Interview Invitation
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="padding:40px 34px;color:#374151;">
       
-      <h2 style="font-size:24px;margin-bottom:10px;">
+      <h2 style="font-size:22px;margin-bottom:10px;text-align:center;">
         Hi ${app.applicant.name},
       </h2>
 
-      <p style="font-size:17px;line-height:1.7;margin-bottom:18px;">
-        Congratulations! After reviewing your application, 
-        <b>${req.user.name}</b> has shortlisted you for the next stage 
-        of the hiring process for the position of 
+      <p style="font-size:16px;line-height:1.7;margin-bottom:18px;text-align:center;">
+        Congratulations! <b>${req.user.name}</b> from 
+        <b>${req.user.companyName || "the company"}</b> has shortlisted you 
+        for the role of 
         <b style="color:#4f46e5;">${app.job.title}</b>.
       </p>
 
-      <p style="font-size:16px;margin-bottom:30px;">
-        Please begin your <b>AI-powered interview</b> by clicking the button below.
+      <p style="font-size:15px;margin-bottom:26px;text-align:center;">
+        Start your <b>AI-powered interview</b> using the button below.
       </p>
 
-      <!-- Button -->
-      <a href="${interviewLink}" style="
-          display:inline-block;
-          padding:15px 36px;
-          background:#6d28d9;
-          color:white;
-          font-size:17px;
-          font-weight:bold;
-          text-decoration:none;
-          border-radius:8px;
-          box-shadow:0 4px 12px rgba(0,0,0,0.18);
-      ">
-        Start AI Interview
-      </a>
+      <!-- BUTTON -->
+      <div style="text-align:center;">
+        <a href="${interviewLink}" style="
+            display:inline-block;
+            padding:14px 34px;
+            background:#6d28d9;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            text-decoration:none;
+            border-radius:8px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.18);
+        ">
+          Start AI Interview
+        </a>
+      </div>
 
+      <!-- INFO CARD -->
+      <div style="
+          margin-top:30px;
+          background:#f9fafb;
+          padding:20px 24px;
+          border-radius:10px;
+          border:1px solid #e5e7eb;
+      ">
+        <h3 style="margin-bottom:10px;color:#111827;">
+          📌 Interview Guidelines
+        </h3>
+
+        <ul style="padding-left:18px;font-size:14px;line-height:1.7;color:#4b5563;">
+          <li>Ensure a stable internet connection</li>
+          <li>Use a quiet environment</li>
+          <li>Do not refresh or leave the page</li>
+          <li>Answer clearly and confidently</li>
+        </ul>
+
+        <h3 style="margin:16px 0 8px;color:#111827;">
+          💡 Tips
+        </h3>
+
+        <ul style="padding-left:18px;font-size:14px;line-height:1.7;color:#4b5563;">
+          <li>Think before answering</li>
+          <li>Be concise and structured</li>
+          <li>Use examples where possible</li>
+        </ul>
+      </div>
+
+      <!-- FOOTER NOTE -->
       <p style="
-          margin-top:28px;
+          margin-top:26px;
           font-size:14px;
           color:#6b7280;
-          line-height:1.6;
+          text-align:center;
       ">
-        The interview will take approximately <b>5–10 minutes</b>.  
-        Please complete it at your earliest convenience.
+        ⏱ Duration: <b>15–20 minutes</b>
       </p>
 
-      <!-- Backup link -->
-      <p style="margin-top:18px;font-size:13px;color:#9ca3af;">
-        If the button doesn't work, copy and paste this link into your browser:
+      <!-- BACKUP LINK -->
+      <p style="margin-top:16px;font-size:12px;color:#9ca3af;text-align:center;">
+        If the button doesn't work:
         <br>
-        <span style="color:#4f46e5;">${interviewLink}</span>
+        <span style="color:#4f46e5;">http://localhost:5173/my-applications</span>
       </p>
 
     </div>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <div style="
-        background:#f9fafb;
-        padding:24px;
+        background:#111827;
+        color:#d1d5db;
+        padding:22px;
         text-align:center;
-        font-size:14px;
-        color:#6b7280;
+        font-size:13px;
     ">
       <p style="margin:0;">
-        Best of luck with your interview!
+        This is an automated message from <b>${req.user.companyName || "Hiring Team"}</b>
       </p>
 
-      <p style="margin-top:8px;font-size:15px;color:#374151;">
-        <b>${req.user.name}</b><br>
+      <p style="margin-top:6px;">
+        Contact: ${req.user.email || "hr@company.com"}
+      </p>
+
+      <p style="margin-top:10px;font-size:12px;color:#9ca3af;">
+        © ${new Date().getFullYear()} ${req.user.companyName || "Recruitment System"}  
+        All rights reserved.
       </p>
     </div>
 
   </div>
-</div>
-`
+</div>`
     });
 
     // Update DB
