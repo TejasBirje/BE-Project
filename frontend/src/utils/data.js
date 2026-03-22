@@ -50,8 +50,7 @@ export const employerFeatures = [
   {
     icon: Briefcase,
     title: "Post Jobs Easily",
-    description:
-      "Create and publish job listings in just a few steps.",
+    description: "Create and publish job listings in just a few steps.",
   },
   {
     icon: FileText,
@@ -73,6 +72,7 @@ export const NAVIGATION_MENU = [
   { id: "post-job", name: "Post Job", icon: Plus },
   { id: "manage-jobs", name: "Manage Jobs", icon: Briefcase },
   { id: "company-profile", name: "Company Profile", icon: Building2 },
+  { id: "employer/assessments", name: "Assessments", icon: BarChart3 },
 ];
 
 // Categories and job types
@@ -99,7 +99,7 @@ export const JOB_TYPES = [
 ];
 
 export const SALARY_RANGES = [
-    "Less than 5LPA", 
-    "5LPA-10LPA",
-    "More than 10LPA"
-]
+  "Less than 5LPA",
+  "5LPA-10LPA",
+  "More than 10LPA",
+];

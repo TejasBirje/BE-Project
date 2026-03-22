@@ -72,6 +72,7 @@ export const API_PATHS = {
     GET_RESULTS: (id) => `/api/assessments/${id}/results`,
     GET_CANDIDATE_RESULT: (id, candidateId) =>
       `/api/assessments/${id}/results/${candidateId}`,
+    DELETE: (id) => `/api/assessments/${id}`,
   },
   ATTEMPT: {
     VALIDATE_TOKEN: (token) => `/api/attempt/invite/${token}`,

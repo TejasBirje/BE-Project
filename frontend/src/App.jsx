@@ -29,6 +29,7 @@ import AssessmentResults from "./pages/Assessment/employer/AssessmentResults";
 import AssessmentInstructions from "./pages/Assessment/candidate/AssessmentInstructions";
 import AssessmentTest from "./pages/Assessment/candidate/AssessmentTest";
 import AssessmentResult from "./pages/Assessment/candidate/AssessmentResult";
+import EmployerAssessments from "./pages/Assessment/employer/EmployerAssessments";
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
               <Route
                 path="/company-profile"
                 element={<EmployerProfilePage />}
+              />
+              <Route
+                path="/employer/assessments"
+                element={<EmployerAssessments />}
               />
               <Route
                 path="/employer/assessments/create"

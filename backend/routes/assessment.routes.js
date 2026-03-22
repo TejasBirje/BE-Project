@@ -6,6 +6,7 @@ import {
   sendAssessmentInvite,
   getAssessmentResults,
   getCandidateResult,
+  deleteAssessment,
 } from "../controllers/assessment.controller.js";
 // import { verifyToken } from "../middleware/auth.middleware.js"; // your existing JWT middleware
 import { protect as verifyToken } from "../middlewares/auth.middleware.js";
@@ -23,5 +24,6 @@ router.get(
   verifyToken,
   getCandidateResult,
 );
+router.delete("/:assessmentId", verifyToken, deleteAssessment);
 
 export default router;

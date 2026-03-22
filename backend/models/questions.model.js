@@ -8,6 +8,7 @@ const questionSchema = new mongoose.Schema({
   correctAnswer: String,
   difficulty: { type: String, enum: ["easy", "medium", "hard"] },
   topic: String,
+  marks: { type: Number, default: 1 }, // ✅ ADDED THIS LINE
 });
 
 const Question = mongoose.model("Question", questionSchema);

@@ -15,6 +15,7 @@ import initInterviewSocket from "./interviewServer.js";
 import { fileURLToPath } from "url";
 import assessmentRoutes from "./routes/assessment.routes.js";
 import attemptRoutes from "./routes/attempt.routes.js";
+import judgeRoutes from "./routes/judge.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,13 +28,22 @@ const app = express();
 const server = http.createServer(app);
 
 // CORS
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   }),
+// );
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   }),
 );
+app.options(/.*/, cors()); // ✅ use regex instead of string to handle preflight requests for all routes
 
 // Connect DB
 connectDB();
@@ -52,6 +62,9 @@ app.use("/api/interview", interviewRoutes);
 // add alongside your existing routes
 app.use("/api/assessments", assessmentRoutes);
 app.use("/api/attempt", attemptRoutes);
+
+// Judge routes (for code execution during interviews and assessments)
+app.use("/api/judge", judgeRoutes);
 
 // Server uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
