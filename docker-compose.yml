@@ -27,6 +27,9 @@ services:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_BASE_URL: /
+        VITE_PYTHON_BASE: /python
     ports:
       - "3000:80" # Maps port 80 (Nginx) from the container to port 3000 on the host
     restart: unless-stopped

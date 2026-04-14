@@ -7,6 +7,9 @@ RUN npm install
 
 COPY . .
 
+ARG VITE_BASE_URL
+ENV VITE_BASE_URL=$VITE_BASE_URL
+
 # Build the Vite application for production
 RUN npm run build
 
