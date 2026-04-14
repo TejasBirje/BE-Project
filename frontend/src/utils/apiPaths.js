@@ -1,10 +1,10 @@
 // apiPaths.js
 
 // Main Node/Express Backend
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
 // Python Microservice
-export const PYTHON_BASE = "http://localhost:8000";
+export const PYTHON_BASE = import.meta.env.VITE_PYTHON_BASE || "http://localhost:8000";
 
 export const API_PATHS = {
   AUTH: {
