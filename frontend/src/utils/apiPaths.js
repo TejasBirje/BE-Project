@@ -1,10 +1,26 @@
 // apiPaths.js
 
+const normalizeBaseUrl = (value, fallback) => {
+  const raw = (value ?? fallback ?? "").trim();
+
+  // When using same-origin behind Nginx, '/' should behave like empty base.
+  if (raw === "/") return "";
+
+  // Remove trailing slash so `${BASE_URL}/api/...` never becomes `//api/...`.
+  return raw.endsWith("/") ? raw.slice(0, -1) : raw;
+};
+
 // Main Node/Express Backend
-export const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+export const BASE_URL = normalizeBaseUrl(
+  import.meta.env.VITE_BASE_URL,
+  "http://localhost:5000"
+);
 
 // Python Microservice
-export const PYTHON_BASE = import.meta.env.VITE_PYTHON_BASE || "http://localhost:8000";
+export const PYTHON_BASE = normalizeBaseUrl(
+  import.meta.env.VITE_PYTHON_BASE,
+  "http://localhost:8000"
+);
 
 export const API_PATHS = {
   AUTH: {
