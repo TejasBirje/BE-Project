@@ -6,18 +6,17 @@ import {
   MicOff,
   PhoneOff,
   MessageSquare,
-  User,
   AlertTriangle,
   Send,
-  Wifi,
   WifiOff,
   ShieldAlert,
   X,
+  Camera,
 } from "lucide-react";
 import useSpeechToText from "../../hooks/useSpeechToText";
 import useTextToSpeech from "../../hooks/useTextToSpeech";
-import useTabFocusGuard from "../../hooks/useTabFocusGuard";
 import useInterviewTimer from "../../hooks/useInterviewTimer";
+import useCheatingDetection from "../../hooks/useCheatingDetection";
 import { BASE_URL } from "../../utils/apiPaths";
 
 // ── Phases ──
@@ -55,18 +54,14 @@ const InterviewSession = ({
   // ── UI Modals ──
   const [showEndConfirmModal, setShowEndConfirmModal] = useState(false);
   const [showTabWarning, setShowTabWarning] = useState(false);
+  const [cheatFlagCounts, setCheatFlagCounts] = useState({});
+  const [lastCheatFlag, setLastCheatFlag] = useState(null);
 
   // ── Refs ──
   const socketRef = useRef(null);
   const chatEndRef = useRef(null);
   const streamRef = useRef("");
   const endingRef = useRef(false);
-  const interviewIdRef = useRef(null);
-
-  // Keep interviewId ref in sync for use in callbacks
-  useEffect(() => {
-    interviewIdRef.current = interviewId;
-  }, [interviewId]);
 
   // ── Custom Hooks ──
   const {
@@ -81,28 +76,34 @@ const InterviewSession = ({
   const { speak, isSpeaking, setOnSpeechEnd } = useTextToSpeech();
   const { formattedTime, startTimer, stopTimer } = useInterviewTimer();
 
-  // Tab-switch cheating detection
-  const handleCheatDetected = useCallback(() => {
-    if (socketRef.current && interviewIdRef.current) {
-      stopListening();
-      socketRef.current.emit("tabSwitchViolation", {
-        interviewId: interviewIdRef.current,
-      });
-    }
-  }, [stopListening]);
-
-  const { tabSwitchCount, wasWarned } = useTabFocusGuard({
+  const {
+    videoRef,
+    webcamError: proctorError,
+    detectorReady,
+    faceCount,
+    lastFlagType,
+  } = useCheatingDetection({
     enabled: phase === PHASE.INTERVIEW,
-    threshold: 2,
-    onCheatDetected: handleCheatDetected,
+    interviewId,
+    socketRef,
+    detectionIntervalMs: 500,
+    lookAwayThresholdMs: 3000,
+    enableObjectDetection: false,
   });
 
-  // Show warning overlay on first tab switch
   useEffect(() => {
-    if (wasWarned && tabSwitchCount === 1) {
+    if (!lastFlagType) return;
+
+    setCheatFlagCounts((prev) => ({
+      ...prev,
+      [lastFlagType]: (prev[lastFlagType] || 0) + 1,
+    }));
+    setLastCheatFlag(lastFlagType);
+
+    if (lastFlagType === "TAB_SWITCH") {
       setShowTabWarning(true);
     }
-  }, [wasWarned, tabSwitchCount]);
+  }, [lastFlagType]);
 
   // ── Scroll to bottom on new messages ──
   useEffect(() => {
@@ -543,12 +544,8 @@ const InterviewSession = ({
               Warning: Tab Switch Detected
             </h3>
             <p className="text-sm text-center text-amber-200/70 mb-5">
-              Switching tabs during an interview is considered cheating. If you
-              switch tabs again, your interview will be{" "}
-              <span className="font-bold text-red-400">
-                automatically terminated
-              </span>
-              .
+              Switching tabs during an interview is logged as a cheating flag.
+              Please stay on this tab for the rest of your session.
             </p>
             <button
               onClick={() => setShowTabWarning(false)}
@@ -618,6 +615,9 @@ const InterviewSession = ({
           {/* Progress */}
           <span className="text-xs text-slate-500">
             Q {questionCount}/{questionLimit}
+          </span>
+          <span className="text-xs text-slate-500">
+            {detectorReady ? `Faces: ${faceCount}` : "Proctoring..."}
           </span>
           {/* Progress bar */}
           <div className="w-20 h-1.5 bg-slate-700 rounded-full overflow-hidden hidden sm:block">
@@ -725,12 +725,27 @@ const InterviewSession = ({
               : "border-slate-700/50"
           }`}
         >
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
-          </div>
-          <div className="mt-2 text-[11px] text-slate-400">You</div>
-          <div className="text-[10px] text-emerald-400 mt-0.5">
-            {isListening ? "🎙️ Listening..." : "Ready"}
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className="absolute inset-0 w-full h-full object-cover rounded-xl scale-x-[-1]"
+          />
+
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/55 to-transparent" />
+
+          {proctorError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 rounded-xl">
+              <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
+                <Camera className="w-5 h-5 text-red-300" />
+              </div>
+            </div>
+          )}
+
+          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px]">
+            <span className="text-slate-200 font-medium">You</span>
+            <span className="text-emerald-300">{isListening ? "Listening" : "Ready"}</span>
           </div>
         </div>
 
@@ -857,6 +872,18 @@ const InterviewSession = ({
           >
             <X className="w-4 h-4" />
           </button>
+        </div>
+      )}
+
+      {proctorError && (
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-amber-500/90 text-slate-900 px-5 py-2.5 rounded-lg text-sm shadow-lg z-50">
+          Camera access is required for cheating detection.
+        </div>
+      )}
+
+      {lastCheatFlag && (
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 bg-slate-800/90 border border-slate-700 text-slate-200 px-4 py-2 rounded-lg text-xs shadow-lg z-40">
+          Last flag: {lastCheatFlag} | Total flags: {Object.values(cheatFlagCounts).reduce((a, b) => a + b, 0)}
         </div>
       )}
 

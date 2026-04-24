@@ -24,7 +24,7 @@ export const getUserInterviews = async (req, res) => {
     const interviews = await Interview.find({ userId: req.user._id })
       .sort({ createdAt: -1 })
       .select(
-        "jobDescription status questionLimit createdAt feedback.technicalScore feedback.communicationScore atsScore",
+        "jobDescription status questionLimit createdAt feedback.technicalScore feedback.communicationScore atsScore aiScore.label aiScore.score cheatingFlags",
       );
 
     res.json(interviews);

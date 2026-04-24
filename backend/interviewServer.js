@@ -13,6 +13,7 @@ const PYTHON_SERVICE =
 const QUESTION_SELECTOR_URL = `${PYTHON_SERVICE}/select_questions`;
 const ATS_SERVICE_URL = `${PYTHON_SERVICE}/calculate_weighted_score`;
 const KEYWORDS_URL = `${PYTHON_SERVICE}/extract_keywords`;
+const AI_ANALYZE_URL = `${PYTHON_SERVICE}/analyze-content`;
 
 // ── DUMMY JD (fallback when no JD is provided) ──
 const DUMMY_JD = `
@@ -95,6 +96,36 @@ async function generateFeedback(genAI, interviewHistory) {
   return feedbackData;
 }
 
+function buildTranscript(messages = []) {
+  return messages
+    .map((m) => `${m.role === "user" ? "Candidate" : "Interviewer"}: ${m.content}`)
+    .join("\n")
+    .trim();
+}
+
+async function analyzeAiContent(messages = []) {
+  const transcript = buildTranscript(messages);
+  if (!transcript) {
+    return { label: null, score: null };
+  }
+
+  try {
+    // Example Node -> Python call:
+    // await axios.post(`${PYTHON_SERVICE}/analyze-content`, { text: transcript })
+    const aiRes = await axios.post(AI_ANALYZE_URL, { text: transcript });
+    const label = aiRes.data?.label === "AI" ? "AI" : "HUMAN";
+    const scoreNum = Number(aiRes.data?.score);
+
+    return {
+      label,
+      score: Number.isFinite(scoreNum) ? Math.max(0, Math.min(1, scoreNum)) : null,
+    };
+  } catch (error) {
+    console.warn("⚠️ AI content analysis unavailable:", error.message);
+    return { label: null, score: null };
+  }
+}
+
 // ── MAIN EXPORT ──
 
 /**
@@ -169,6 +200,7 @@ export default function initInterviewSocket(httpServer) {
 
           // ── Create Interview Document ──
           const newInterview = new Interview({
+            candidateId: userId || null,
             userId: userId || null,
             resumeId,
             jobDescription: jdToUse,
@@ -308,7 +340,16 @@ Rules:
         }
 
         // ── Save messages to DB ──
+        const lastQuestion = [...interview.messages]
+          .reverse()
+          .find((m) => m.role === "model")?.content;
+
         interview.messages.push({ role: "user", content: message });
+        interview.responses.push({
+          question: lastQuestion || "",
+          answer: message,
+          timestamp: new Date(),
+        });
         interview.messages.push({ role: "model", content: fullResponse });
         await interview.save();
 
@@ -359,6 +400,8 @@ Rules:
             }
           }
 
+          const aiScore = await analyzeAiContent(interview.messages);
+
           // ── Final atomic write — no .save(), no __v conflict ──
           await Interview.findByIdAndUpdate(interviewId, {
             $set: {
@@ -367,6 +410,7 @@ Rules:
               feedback,
               atsScore,
               keywords,
+              aiScore,
             },
           });
 
@@ -374,6 +418,7 @@ Rules:
             feedback,
             atsScore,
             keywords,
+            aiScore,
           });
           console.log("✅ Interview completed:", interviewId);
         }
@@ -384,6 +429,44 @@ Rules:
         });
       }
     }); // ──────────────────────────────────────────
+    // EVENT: cheatingFlag
+    // ──────────────────────────────────────────
+    socket.on("cheatingFlag", async ({ interviewId, type, timestamp }) => {
+      try {
+        if (!interviewId || !type) {
+          return;
+        }
+
+        const allowedTypes = new Set([
+          "TAB_SWITCH",
+          "NO_FACE",
+          "MULTIPLE_FACES",
+          "LOOKING_AWAY",
+          "PHONE_DETECTED",
+        ]);
+
+        if (!allowedTypes.has(type)) {
+          return;
+        }
+
+        await Interview.findByIdAndUpdate(interviewId, {
+          $push: {
+            cheatingFlags: {
+              type,
+              timestamp: Number.isFinite(Number(timestamp))
+                ? Number(timestamp)
+                : Date.now(),
+            },
+          },
+        });
+
+        socket.emit("cheatingFlagAck", { type, interviewId });
+      } catch (error) {
+        console.error("cheatingFlag Error:", error);
+      }
+    });
+
+    // ──────────────────────────────────────────
     // EVENT: endInterview  (manual early end)
     // ──────────────────────────────────────────
     socket.on("endInterview", async ({ interviewId }) => {
@@ -415,6 +498,7 @@ Rules:
               feedback: done.feedback,
               atsScore: done.atsScore,
               keywords: done.keywords ?? [],
+              aiScore: done.aiScore ?? { label: null, score: null },
             });
           }
           return;
@@ -448,6 +532,8 @@ Rules:
           }
         }
 
+        const aiScore = await analyzeAiContent(locked.messages);
+
         // ── Final atomic write — no .save(), no __v conflict ──
         await Interview.findByIdAndUpdate(interviewId, {
           $set: {
@@ -456,10 +542,16 @@ Rules:
             feedback,
             atsScore,
             keywords,
+            aiScore,
           },
         });
 
-        socket.emit("interviewComplete", { feedback, atsScore, keywords });
+        socket.emit("interviewComplete", {
+          feedback,
+          atsScore,
+          keywords,
+          aiScore,
+        });
         console.log("✅ Interview ended manually:", interviewId);
       } catch (error) {
         console.error("endInterview Error:", error);
@@ -503,6 +595,7 @@ Rules:
               feedback: done.feedback,
               atsScore: done.atsScore,
               keywords: done.keywords ?? [],
+              aiScore: done.aiScore ?? { label: null, score: null },
             });
           }
           return;
@@ -534,6 +627,8 @@ Rules:
           }
         }
 
+        const aiScore = await analyzeAiContent(locked.messages);
+
         await Interview.findByIdAndUpdate(interviewId, {
           $set: {
             status: "completed",
@@ -542,6 +637,7 @@ Rules:
             feedback,
             atsScore,
             keywords,
+            aiScore,
           },
         });
 
@@ -550,6 +646,7 @@ Rules:
           feedback,
           atsScore,
           keywords,
+          aiScore,
         });
         console.log("✅ Interview terminated (tab switch):", interviewId);
       } catch (error) {

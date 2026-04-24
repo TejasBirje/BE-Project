@@ -1,11 +1,15 @@
 import spacy
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sentence_transformers import SentenceTransformer
 from keybert import KeyBERT
+from pydantic import BaseModel, Field
+from transformers import pipeline, AutoTokenizer
 
 from ats_service import calculate_ats_score
 from question_selector import QuestionBank, extract_jd_keywords, get_questions_for_jd
+
+AI_DETECT_MODEL = "SzegedAI/roberta-base-bne-finetuned-ai-detection"
 
 # ────────────────────────────────────────────
 # APP SETUP
@@ -27,21 +31,30 @@ print("\n" + "=" * 60)
 print("🚀 LOADING MODELS")
 print("=" * 60)
 
-print("\n🔄 [1/4] Loading spaCy model (en_core_web_sm)...")
+print("\n🔄 [1/5] Loading spaCy model (en_core_web_sm)...")
 nlp = spacy.load("en_core_web_sm")
 print("   ✅ spaCy loaded.")
 
-print("\n🔄 [2/4] Loading SentenceTransformer (all-MiniLM-L6-v2)...")
+print("\n🔄 [2/5] Loading SentenceTransformer (all-MiniLM-L6-v2)...")
 st_model = SentenceTransformer('all-MiniLM-L6-v2')
 print("   ✅ SentenceTransformer loaded.")
 
-print("\n🔄 [3/4] Loading KeyBERT model...")
+print("\n🔄 [3/5] Loading KeyBERT model...")
 kw_model = KeyBERT(model=st_model)  # Reuse SentenceTransformer — no extra model download!
 print("   ✅ KeyBERT loaded (sharing SentenceTransformer backbone).")
 
-print("\n🔄 [4/4] Loading & vectorizing question bank...")
+print("\n🔄 [4/5] Loading & vectorizing question bank...")
 question_bank = QuestionBank(model=st_model)
 print("   ✅ Question bank ready.")
+
+print("\n🔄 [5/5] Loading AI content detector...")
+ai_tokenizer = AutoTokenizer.from_pretrained(AI_DETECT_MODEL)
+ai_detector = pipeline(
+    "text-classification",
+    model=AI_DETECT_MODEL,
+    tokenizer=ai_tokenizer,
+)
+print("   ✅ AI content detector loaded.")
 
 print("\n" + "=" * 60)
 print("✅ ALL MODELS LOADED — Server ready!")
@@ -58,9 +71,78 @@ async def health_check():
     print("💚 Health check hit")
     return {
         "status": "ok",
-        "models_loaded": ["spacy", "sentence-transformers", "keybert"],
+        "models_loaded": ["spacy", "sentence-transformers", "keybert", "hf-ai-detector"],
         "question_bank_size": len(question_bank.questions)
     }
+
+
+class AnalyzeContentRequest(BaseModel):
+    text: str = Field(..., min_length=1)
+
+
+class AnalyzeContentResponse(BaseModel):
+    label: str
+    score: float
+
+
+def chunk_text_by_tokens(text: str, max_tokens: int = 510):
+    token_ids = ai_tokenizer.encode(text, add_special_tokens=False)
+    if len(token_ids) <= max_tokens:
+        return [text]
+
+    chunks = []
+    for i in range(0, len(token_ids), max_tokens):
+        chunk_tokens = token_ids[i:i + max_tokens]
+        chunk_text = ai_tokenizer.decode(
+            chunk_tokens,
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=True,
+        )
+        if chunk_text.strip():
+            chunks.append(chunk_text)
+
+    return chunks or [text]
+
+
+def ai_probability_from_prediction(prediction: dict) -> float:
+    raw_label = str(prediction.get("label", "")).upper()
+    score = float(prediction.get("score", 0.0))
+
+    # Fallback for generic labels (e.g., LABEL_0/LABEL_1) if model metadata is unavailable.
+    if raw_label.startswith("LABEL_0"):
+        return 1.0 - score
+    if raw_label.startswith("LABEL_1"):
+        return score
+
+    if "AI" in raw_label or "MACHINE" in raw_label:
+        return score
+    if "HUMAN" in raw_label or "REAL" in raw_label:
+        return 1.0 - score
+
+    return score
+
+
+@app.post("/analyze-content", response_model=AnalyzeContentResponse)
+async def analyze_content(payload: AnalyzeContentRequest):
+    """Classify transcript text as AI/HUMAN with chunked averaging for long input."""
+    if ai_detector is None or ai_tokenizer is None:
+        raise HTTPException(status_code=503, detail="AI detector is not ready")
+
+    if not payload.text.strip():
+        raise HTTPException(status_code=400, detail="text must not be empty")
+
+    chunks = chunk_text_by_tokens(payload.text)
+    ai_probs = []
+
+    for chunk in chunks:
+        pred = ai_detector(chunk, truncation=True, max_length=512)[0]
+        ai_probs.append(ai_probability_from_prediction(pred))
+
+    avg_ai_prob = sum(ai_probs) / len(ai_probs)
+    label = "AI" if avg_ai_prob >= 0.5 else "HUMAN"
+    confidence = avg_ai_prob if label == "AI" else 1.0 - avg_ai_prob
+
+    return AnalyzeContentResponse(label=label, score=round(float(confidence), 4))
 
 
 # ────────────────────────────────────────────

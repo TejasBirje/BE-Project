@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
 
 const interviewSchema = new mongoose.Schema({
+  candidateId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   resumeId: { type: mongoose.Schema.Types.ObjectId, ref: "Resume" },
   jobDescription: { type: String, default: "" },
   questionLimit: { type: Number, default: 5 },
+  responses: [
+    {
+      question: { type: String, default: "" },
+      answer: { type: String, default: "" },
+      timestamp: { type: Date, default: Date.now },
+    },
+  ],
   questions: [
     {
       question: String,
@@ -41,6 +49,29 @@ const interviewSchema = new mongoose.Schema({
       score: Number,
     },
   ],
+  cheatingFlags: [
+    {
+      type: {
+        type: String,
+        enum: [
+          "TAB_SWITCH",
+          "NO_FACE",
+          "MULTIPLE_FACES",
+          "LOOKING_AWAY",
+          "PHONE_DETECTED",
+        ],
+      },
+      timestamp: { type: Number, required: true },
+    },
+  ],
+  aiScore: {
+    label: {
+      type: String,
+      enum: ["AI", "HUMAN", null],
+      default: null,
+    },
+    score: { type: Number, default: null },
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
